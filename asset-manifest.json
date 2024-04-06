@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/flashcards/static/css/main.87970dbe.css",
+    "main.js": "/flashcards/static/js/main.6af554e5.js",
+    "static/js/453.73df2adf.chunk.js": "/flashcards/static/js/453.73df2adf.chunk.js",
+    "static/media/primeicons.svg": "/flashcards/static/media/primeicons.e1441b135b3ca9ad643c.svg",
+    "static/media/primeicons.eot": "/flashcards/static/media/primeicons.d44157bdfa026dc877af.eot",
+    "static/media/primeicons.woff": "/flashcards/static/media/primeicons.10d3152104f2208ac82a.woff",
+    "static/media/primeicons.ttf": "/flashcards/static/media/primeicons.ea5358601d0a3fd6670b.ttf",
+    "static/media/primeicons.woff2": "/flashcards/static/media/primeicons.78172950b335ccdb94e2.woff2",
+    "static/media/poppins-v15-latin-ext_latin-600.woff": "/flashcards/static/media/poppins-v15-latin-ext_latin-600.12e1140bb546e24bfb49.woff",
+    "static/media/poppins-v15-latin-ext_latin-regular.woff": "/flashcards/static/media/poppins-v15-latin-ext_latin-regular.ac60ff327b209b58512c.woff",
+    "static/media/poppins-v15-latin-ext_latin-300.woff": "/flashcards/static/media/poppins-v15-latin-ext_latin-300.60899c7185362bb15750.woff",
+    "static/media/poppins-v15-latin-ext_latin-700.woff": "/flashcards/static/media/poppins-v15-latin-ext_latin-700.00e5337651210e9ec6c7.woff",
+    "static/media/poppins-v15-latin-ext_latin-600.woff2": "/flashcards/static/media/poppins-v15-latin-ext_latin-600.27069d861fbec01deb28.woff2",
+    "static/media/poppins-v15-latin-ext_latin-regular.woff2": "/flashcards/static/media/poppins-v15-latin-ext_latin-regular.314a6a775e933d47e60c.woff2",
+    "static/media/poppins-v15-latin-ext_latin-300.woff2": "/flashcards/static/media/poppins-v15-latin-ext_latin-300.d3b32b9a7d568c00f7c0.woff2",
+    "static/media/poppins-v15-latin-ext_latin-700.woff2": "/flashcards/static/media/poppins-v15-latin-ext_latin-700.5e2dfda5fae3c158fe30.woff2",
+    "index.html": "/flashcards/index.html",
+    "main.87970dbe.css.map": "/flashcards/static/css/main.87970dbe.css.map",
+    "main.6af554e5.js.map": "/flashcards/static/js/main.6af554e5.js.map",
+    "453.73df2adf.chunk.js.map": "/flashcards/static/js/453.73df2adf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.87970dbe.css",
+    "static/js/main.6af554e5.js"
+  ]
+}
