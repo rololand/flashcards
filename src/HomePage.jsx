@@ -29,7 +29,7 @@ function HomePage() {
   }
   const [wordsToDo, setWordsToDo] = useState([emptyWord])
   const [wordsToDoCount, setWordsToDoCount] = useState(0)
-  const [userName, setUserName] = useState('Roland')
+  const [userName, setUserName] = useState('Ola')
   const [currentPage, setCurrentPage] = useState('homePage')
   const [isLoaded, setIsLoaded] = useState(false)
 

@@ -22,8 +22,8 @@ function App() {
     <PrimeReactProvider>
       <AppMenu />
         <Routes>
-          <Route index path={'/'} element={<HomePage />} />
-          <Route path={'/library'} element={<WordsTable />} />
+          <Route index path={'/flashcards/'} element={<HomePage />} />
+          <Route path={'/library/'} element={<WordsTable />} />
         </Routes>
     </PrimeReactProvider>
     

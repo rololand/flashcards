@@ -13,12 +13,12 @@ function AppMenu() {
         {
             label: 'Home',
             icon: 'pi pi-home',
-            command: () => navigate('/')
+            command: () => navigate('flashcards/')
         },
         {
             label: 'Library',
             icon: 'pi pi-language',
-            command: () => navigate('library')
+            command: () => navigate('library/')
         },
     ]
     return (
