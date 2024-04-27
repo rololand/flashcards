@@ -18,7 +18,7 @@ function AppMenu() {
         {
             label: 'Library',
             icon: 'pi pi-language',
-            command: () => navigate('library/')
+            command: () => navigate('flashcards/library/')
         },
     ]
     return (

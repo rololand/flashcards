@@ -12,7 +12,7 @@ function SummaryPage(props) {
           <p className="m-0 text-color-secondary" >You have finished exercise!</p>
         </div>
         <div className="flex align-items-center justify-content-center h-4rem border-round m-2">
-          <Button label="Back" onClick={() => {window.location.reload()}} />
+          <Button label="Back" onClick={props.handleSummaryBackClick} />
         </div>
       </div>
     </div>

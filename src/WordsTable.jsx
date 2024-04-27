@@ -1,24 +1,24 @@
 
 import axios from 'axios'
 
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import { PrimeReactProvider } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 import { Toast } from 'primereact/toast';
-
 import 'primeicons/primeicons.css';
 
 import { useEffect, useState, useRef } from 'react';
 
+import LoadingPage from './LoadingPage';
 
 
 function WordsTable() {
   const [words, setWords] = useState([])
   const [isNewData, setIsNewData] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
   const azure_url = 'https://flashcardsfunction.azurewebsites.net/api/words'
 
   const myToast = useRef(null);
@@ -33,8 +33,7 @@ function WordsTable() {
         .then(res => {
           setWords(res.data.reverse())
           setIsNewData(false)
-          console.log('Words are loaded!')
-          showToast('success','Words are loaded!','SQL data is loaded to the UI')
+          setIsLoaded(true)
         })
         .catch(err => {
           console.log('Error: ' + err);
@@ -53,16 +52,19 @@ function WordsTable() {
     const newCard = {
       "id": null,
       "pl": '',
+      "en": '',
       "de": '',
       "it": '',
       "es": '',
       "sentence_pl": '',
+      "sentence_en": '',
       "sentence_de": '',
       "sentence_it": '',
       "sentence_es": '',
-      "date_ola": '',
-      "date_rol": '',
+      "date_ola": null,
+      "date_rol": null,
       "hint_pl": '',
+      "hint_en": '',
       "hint_de": '',
       "hint_it": '',
       "hint_es": '',
@@ -96,17 +98,16 @@ function WordsTable() {
   }
 
   const editCard = (e) => {
+    setIsLoaded(false)
     // console.log(e.data) // stare dane
     // console.log(e.newData) // nowe dane
     axios.put(azure_url, e.newData)
       .then(res => {
         setIsNewData(true)
-        console.log('Word card updated!')
-        showToast('success','Word card is updated!','Word card is saved to SQL database')
       })
       .catch(err => {
         console.log('Error: ' + err);
-        showToast('error','Something went wrong!','Error: ' + err)
+        showToast('error','Something went wrong!','Try again later.')
       });
   };
 
@@ -120,28 +121,35 @@ function WordsTable() {
     );
   };
 
-  return (
-    <PrimeReactProvider>
-      <DataTable value={words} dataKey="id" editMode='row' onRowEditComplete={editCard} filters={filters} header={header} emptyMessage="Loading..." paginator rows={10} rowsPerPageOptions={[10, 20, 50, 100]} tableStyle={{ minWidth: '50rem' }}>
-        <Column field="id" header="id"  style={{ width: '2%' }}></Column>
-        <Column field="pl" header="pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="de" header="de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="it" header="it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="es" header="es" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="hint_pl" header="hint_pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="hint_de" header="hint_de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="hint_it" header="hint_it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="hint_es" header="hint_es" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="sentence_pl" header="sentence_pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="sentence_de" header="sentence_de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="sentence_it" header="sentence_it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column field="sentence_es" header="sentence_es" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-        <Column rowEditor={true} headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
-      </DataTable>
-      <Toast ref={myToast} /> 
-    </PrimeReactProvider>
-    
-  );
+  if (isLoaded) {
+    return (
+      <PrimeReactProvider>
+        <DataTable value={words} dataKey="id" editMode='row' onRowEditComplete={editCard} filters={filters} header={header} emptyMessage="Loading..." paginator rows={10} rowsPerPageOptions={[10, 20, 50, 100]} tableStyle={{ minWidth: '50rem' }}>
+          <Column rowEditor={true} headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
+          <Column field="id" header="id"  style={{ width: '2%' }}></Column>
+          <Column field="pl" header="pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="en" header="en" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="de" header="de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="it" header="it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="es" header="es" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="hint_pl" header="hint_pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="hint_en" header="hint_en" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="hint_de" header="hint_de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="hint_it" header="hint_it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="hint_es" header="hint_es" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="sentence_pl" header="sentence_pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="sentence_en" header="sentence_en" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="sentence_de" header="sentence_de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="sentence_it" header="sentence_it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="sentence_es" header="sentence_es" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+        </DataTable>
+        <Toast ref={myToast} /> 
+      </PrimeReactProvider>
+    );
+  } else {
+    return <div><LoadingPage /><Toast ref={myToast} /></div>
+  }
+
 }
 
 export default WordsTable;

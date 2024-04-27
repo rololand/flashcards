@@ -15,7 +15,7 @@ function WelcomePage(props) {
           <p className="m-0 text-primary" >Welcome {props.userName}!</p>
         </div>
         <div className="flex align-items-center justify-content-center h-4rem border-round m-2">
-          <p className="m-0 text-color-secondary" >You have {props.wordsToDoCount} words to learn!</p>
+          <p className="m-0 text-color-secondary" >You have {props.wordsToDoCount} words to practice!</p>
         </div>
         <div className="flex align-items-center justify-content-center h-4rem border-round m-2">
           {buttons()}

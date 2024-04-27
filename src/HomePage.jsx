@@ -1,20 +1,23 @@
 import axios from 'axios'
+import dayjs from 'dayjs';
 
 import WelcomePage from "./WelcomePage";
 import FlashCard from "./FlashCard";
 import SummaryPage from './SummaryPage';
 import LoadingPage from './LoadingPage';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
-function HomePage() {
+function HomePage(props) {
   const emptyWord = {
     "id": '',
+    "en": '',
     "pl": '',
     "de": '',
     "it": '',
     "es": '',
     "sentence_pl": '',
+    "sentence_en": '',
     "sentence_de": '',
     "sentence_it": '',
     "sentence_es": '',
@@ -22,6 +25,7 @@ function HomePage() {
     "date_rol": '',
     "hint_pl": '',
     "hint_de": '',
+    "hint_en": '',
     "hint_it": '',
     "hint_es": '',
     "rank_ola": '',
@@ -29,32 +33,39 @@ function HomePage() {
   }
   const [wordsToDo, setWordsToDo] = useState([emptyWord])
   const [wordsToDoCount, setWordsToDoCount] = useState(0)
-  const [userName, setUserName] = useState('Ola')
   const [currentPage, setCurrentPage] = useState('homePage')
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isExerciseFinished, setIsExerciseFinished] = useState(false)
+
+  const userName = props.userName
 
   useEffect(() => {
     const getWords = () => {
       let azure_url = ''
-      const todayDate = new Date()
-      const year = todayDate.getFullYear()
-      const month = todayDate.getMonth() + 1
-      const day = todayDate.getDate()
-      let todayDateString = year + '-' + month.toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0')
+      const today = dayjs()
+      let todayDateString = today.format('YYYY-MM-DD').toString()
       // todayDateString = '2024-04-07'
-      if (userName == 'Roland') {
+      if (userName.toLowerCase() === 'roland') {
         azure_url = 'https://flashcardsfunction.azurewebsites.net/api/wordsOnRolDate/' + todayDateString
-      } else if (userName == 'Ola') {
+      } else if (userName.toLowerCase() === 'ola') {
         azure_url = 'https://flashcardsfunction.azurewebsites.net/api/wordsOnOlaDate/' + todayDateString
       } else {
         azure_url = 'https://flashcardsfunction.azurewebsites.net/api/words'
       }
       axios.get(azure_url)
         .then(res => {
-          setWordsToDo(res.data)
+          let unshuffled = res.data
+          let shuffled = unshuffled
+            //map to get random sort value for every element in array
+            .map(value => ({ value, sort: Math.random() }))
+            //sort base on created sort value
+            .sort((a, b) => a.sort - b.sort)
+            //unmap to get array
+            .map(({ value }) => value)
+          setWordsToDo(shuffled)
           setWordsToDoCount(res.data.length)
           setIsLoaded(true)
-          console.log('Words are loaded!')
+          setIsExerciseFinished(false)
         })
         .catch(err => {
           console.log('Error: ' + err);
@@ -62,47 +73,41 @@ function HomePage() {
     }
 
     getWords();
-  }, []);
+  }, [isExerciseFinished]);
 
   const handleExerciseFlashCardClick = () => {
     setCurrentPage('flashCard')
   }
 
+  const handleSummaryBackClick = () => {
+    console.log('back')
+    setIsExerciseFinished(true)
+    setIsLoaded(false)
+    setCurrentPage('homePage')
+  }
+
   const handleLearnClick = () => {
     //work around
     //to add api to return X (as a api parameter) words with empty date
-    const azure_url = 'https://flashcardsfunction.azurewebsites.net/api/words'
+    setIsLoaded(false)
+    let azure_url = ''
+    if (userName.toLowerCase() === 'roland') {
+      azure_url = 'https://flashcardsfunction.azurewebsites.net/api/newWordsOnRolDate'
+    } else if (userName.toLowerCase() === 'ola') {
+      azure_url = 'https://flashcardsfunction.azurewebsites.net/api/newWordsOnOlaDate'
+    }
+
     axios.get(azure_url)
       .then(res => {
+        setWordsToDo(res.data)
+        setWordsToDoCount(res.data.length)
+        setIsLoaded(true)
+        setIsExerciseFinished(false)
         console.log('Words are loaded!')
-        console.log(res.data)
-        for (let wordId in res.data) {
-          let wordCard = res.data[wordId]
-          console.log(wordCard)
-          if (userName == 'Roland') {
-            if (wordCard.date_rol == null) {
-              console.log(wordCard)
-              setWordsToDo([wordCard])
-              setWordsToDoCount(1)
-              break
-            } else {
-              continue
-            }
-          } else if (userName == 'Ola') {
-            if (!wordCard.date_ola) {
-              setWordsToDo([wordCard])
-              setWordsToDoCount(1)
-            } else {
-              break
-            }
-          }
-        }
       })
       .catch(err => {
         console.log('Error: ' + err);
       });
-
-    console.log('learn')
   }
 
   const displayExerciseSummary = () => {
@@ -111,17 +116,21 @@ function HomePage() {
 
   const homePagePageSelector = () => {
     if (isLoaded) {
-      if (currentPage == 'homePage' || currentPage == null)
+      if (currentPage === 'homePage' || currentPage == null)
         return <WelcomePage 
-          userName={userName} 
-          wordsToDoCount={wordsToDoCount} 
+          userName={userName}
+          wordsToDoCount={wordsToDoCount}
           handleExerciseFlashCardClick={handleExerciseFlashCardClick}
           handleLearnClick={handleLearnClick}
         />
-      if (currentPage == 'flashCard')
-        return <FlashCard userName={userName} wordsToDo={wordsToDo} displayExerciseSummary={displayExerciseSummary} />
-      if (currentPage == 'exerciseSummary')
-        return <SummaryPage userName={userName} />
+      if (currentPage === 'flashCard')
+        return <FlashCard 
+          userName={userName}
+          wordsToDo={wordsToDo}
+          displayExerciseSummary={displayExerciseSummary}
+        />
+      if (currentPage === 'exerciseSummary')
+        return <SummaryPage userName={userName} handleSummaryBackClick={handleSummaryBackClick} />
     } else {
       return <LoadingPage userName={userName} />
     }
