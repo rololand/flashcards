@@ -4,7 +4,14 @@ function WelcomePage(props) {
    
   const buttons = () => {
     if (props.wordsToDoCount > 0)
-      return <Button label="Exercise!" onClick={props.handleExerciseFlashCardClick} />
+      return <div className="flex flex-wrap align-items-center justify-content-center ">
+          <div className="flex align-items-center justify-content-center h-4rem font-bold border-round m-2">
+            <Button label="Exercise! (flashcards)" onClick={props.handleExerciseFlashCardClick} />
+          </div>
+          <div className="flex align-items-center justify-content-center h-4rem font-bold border-round m-2">
+            <Button label="Exercise! (word guessing)" onClick={props.handleExerciseWordGuessing} />
+          </div>
+        </div>
     return <Button label="Learn new word" onClick={props.handleLearnClick} />
   }
 

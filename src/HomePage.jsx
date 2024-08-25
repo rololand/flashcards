@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 import WelcomePage from "./WelcomePage";
 import FlashCard from "./FlashCard";
+import WordGuessing from './WordGuessing';
 import SummaryPage from './SummaryPage';
 import LoadingPage from './LoadingPage';
 
@@ -79,6 +80,10 @@ function HomePage(props) {
     setCurrentPage('flashCard')
   }
 
+  const handleExerciseWordGuessing = () => {
+    setCurrentPage('wordGuessing')
+  }
+
   const handleSummaryBackClick = () => {
     console.log('back')
     setIsExerciseFinished(true)
@@ -121,10 +126,17 @@ function HomePage(props) {
           userName={userName}
           wordsToDoCount={wordsToDoCount}
           handleExerciseFlashCardClick={handleExerciseFlashCardClick}
+          handleExerciseWordGuessing={handleExerciseWordGuessing}
           handleLearnClick={handleLearnClick}
         />
       if (currentPage === 'flashCard')
         return <FlashCard 
+          userName={userName}
+          wordsToDo={wordsToDo}
+          displayExerciseSummary={displayExerciseSummary}
+        />
+      if (currentPage === 'wordGuessing')
+        return <WordGuessing
           userName={userName}
           wordsToDo={wordsToDo}
           displayExerciseSummary={displayExerciseSummary}
