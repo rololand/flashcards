@@ -76,7 +76,7 @@ function WordGuessing(props) {
   const [lang, setLang] = useState('pl-PL')
   const [result, setResult] = useState(false)
   const [guess, setGuess] = useState('')
-  const [isMuted, setIsMuted] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
   const [isPolishMuted, setIsPolishMuted] = useState(false)
   const speech = new SpeechSynthesisUtterance()
     

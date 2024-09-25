@@ -39,7 +39,7 @@ function FlashCard(props) {
     const [subtitle, setSubtitle] = useState('')
     const [sentence, setSentence] = useState('')
     const [lang, setLang] = useState('pl-PL')
-    const [isMuted, setIsMuted] = useState(false)
+    const [isMuted, setIsMuted] = useState(true)
     const [isPolishMuted, setIsPolishMuted] = useState(false)
     const speech = new SpeechSynthesisUtterance()
     
