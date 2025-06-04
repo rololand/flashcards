@@ -1,4 +1,4 @@
-function LoadingPage(props) {
+function LoadingPage() {
 
   return (
     <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >

@@ -4,14 +4,15 @@
   "homepage": "https://rololand.github.io/flashcards/",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "axios": "^1.6.7",
     "dayjs": "^1.11.10",
     "formik": "^2.4.5",
     "history": "^5.3.0",
+    "microsoft-cognitiveservices-speech-sdk": "^1.43.1",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primereact": "^10.5.1",
@@ -19,7 +20,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.7"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -48,6 +50,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "gh-pages": "^6.3.0"
   }
 }

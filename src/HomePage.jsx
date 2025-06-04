@@ -2,43 +2,36 @@ import axios from 'axios'
 import dayjs from 'dayjs';
 
 import WelcomePage from "./WelcomePage";
-import FlashCard from "./FlashCard";
-import WordGuessing from './WordGuessing';
+import ExercisePage from './ExercisePage.jsx';
 import SummaryPage from './SummaryPage';
 import LoadingPage from './LoadingPage';
 
-import { useEffect, useState } from 'react';
+import { wordsToDoState } from './states/wordsToDo.js';
+import { currentPageState } from './states/currentPage.js';
+import { isLoadedState } from './states/isLoaded.js';
+import { isExerciseFinishedState} from './states/isExerciseFinished.js'
+import { userState } from './states/user';
+import { currentCardState } from './states/currentCard.js';
 
-function HomePage(props) {
-  const emptyWord = {
-    "id": '',
-    "en": '',
-    "pl": '',
-    "de": '',
-    "it": '',
-    "es": '',
-    "sentence_pl": '',
-    "sentence_en": '',
-    "sentence_de": '',
-    "sentence_it": '',
-    "sentence_es": '',
-    "date_ola": '',
-    "date_rol": '',
-    "hint_pl": '',
-    "hint_de": '',
-    "hint_en": '',
-    "hint_it": '',
-    "hint_es": '',
-    "rank_ola": '',
-    "rank_rol": ''
-  }
-  const [wordsToDo, setWordsToDo] = useState([emptyWord])
-  const [wordsToDoCount, setWordsToDoCount] = useState(0)
-  const [currentPage, setCurrentPage] = useState('homePage')
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [isExerciseFinished, setIsExerciseFinished] = useState(false)
+import { useEffect } from 'react';
+import { emptyWord } from './utils.js';
 
-  const userName = props.userName
+
+function HomePage() {
+  const setWordsToDo = wordsToDoState((state) => state.setWordsToDo)
+
+  const currentPage = currentPageState((state) => state.currentPage)
+  const setCurrentPage = currentPageState((state) => state.setCurrentPage)
+
+  const isLoaded = isLoadedState((state) => state.isLoaded)
+  const setIsLoaded = isLoadedState((state) => state.setIsLoaded)
+
+  const isExerciseFinished = isExerciseFinishedState((state) => state.isExerciseFinished)
+  const setIsExerciseFinished = isExerciseFinishedState((state) => state.setIsExerciseFinished)
+
+  const setCurrentCard = currentCardState((state) => state.setCurrentCard)
+
+  const userName = userState((state) => state.userName)
 
   useEffect(() => {
     const getWords = () => {
@@ -64,7 +57,6 @@ function HomePage(props) {
             //unmap to get array
             .map(({ value }) => value)
           setWordsToDo(shuffled)
-          setWordsToDoCount(res.data.length)
           setIsLoaded(true)
           setIsExerciseFinished(false)
         })
@@ -73,19 +65,11 @@ function HomePage(props) {
         });
     }
 
+    setCurrentCard(emptyWord)
     getWords();
-  }, [isExerciseFinished]);
-
-  const handleExerciseFlashCardClick = () => {
-    setCurrentPage('flashCard')
-  }
-
-  const handleExerciseWordGuessing = () => {
-    setCurrentPage('wordGuessing')
-  }
+  }, [isExerciseFinished, userName, setCurrentCard, setIsExerciseFinished, setIsLoaded, setWordsToDo]);
 
   const handleSummaryBackClick = () => {
-    console.log('back')
     setIsExerciseFinished(true)
     setIsLoaded(false)
     setCurrentPage('homePage')
@@ -105,9 +89,9 @@ function HomePage(props) {
     axios.get(azure_url)
       .then(res => {
         setWordsToDo(res.data)
-        setWordsToDoCount(res.data.length)
         setIsLoaded(true)
         setIsExerciseFinished(false)
+        setCurrentPage('flashCard')
         console.log('Words are loaded!')
       })
       .catch(err => {
@@ -115,39 +99,20 @@ function HomePage(props) {
       });
   }
 
-  const displayExerciseSummary = () => {
-    setCurrentPage('exerciseSummary')
-  }
-
   const homePagePageSelector = () => {
     if (isLoaded) {
       if (currentPage === 'homePage' || currentPage == null)
         return <WelcomePage 
-          userName={userName}
-          wordsToDoCount={wordsToDoCount}
-          handleExerciseFlashCardClick={handleExerciseFlashCardClick}
-          handleExerciseWordGuessing={handleExerciseWordGuessing}
           handleLearnClick={handleLearnClick}
         />
-      if (currentPage === 'flashCard')
-        return <FlashCard 
-          userName={userName}
-          wordsToDo={wordsToDo}
-          displayExerciseSummary={displayExerciseSummary}
-        />
-      if (currentPage === 'wordGuessing')
-        return <WordGuessing
-          userName={userName}
-          wordsToDo={wordsToDo}
-          displayExerciseSummary={displayExerciseSummary}
-        />
+      if (currentPage === 'flashCard' || currentPage === 'wordGuessing')
+        return <ExercisePage />
       if (currentPage === 'exerciseSummary')
-        return <SummaryPage userName={userName} handleSummaryBackClick={handleSummaryBackClick} />
+        return <SummaryPage handleSummaryBackClick={handleSummaryBackClick} />
     } else {
-      return <LoadingPage userName={userName} />
+      return <LoadingPage />
     }
-      
-    
+
   }
 
   return (

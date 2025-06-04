@@ -1,48 +1,87 @@
 import axios from 'axios';
-import dayjs from 'dayjs';
+import TextToSpeechEffect from './TextToSpeechEffect';
 
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Toolbar } from 'primereact/toolbar';
-import { InputSwitch } from 'primereact/inputswitch';
+import { useEventListener } from 'primereact/hooks';
+import { MuteSwitch } from './components/MuteSwitch.jsx';
 
-import { useEffect, useState } from 'react';
+import { getNewDate, emptyWord, increaseRank, decreaseRank, getColouredTitleCard } from './utils.js'
+
+import { settings } from './states/settings.js';
+import { wordsToDoState } from './states/wordsToDo.js';
+import { userState } from './states/user';
+import { currentCardState } from './states/currentCard.js';
+
+import { useEffect } from 'react';
 
 function FlashCard(props) {
-    const emptyWord = {
-        "id": '',
-        "pl": '',
-        "de": '',
-        "it": '',
-        "es": '',
-        "sentence_pl": '',
-        "sentence_de": '',
-        "sentence_it": '',
-        "sentence_es": '',
-        "date_ola": '',
-        "date_rol": '',
-        "hint_pl": '',
-        "hint_de": '',
-        "hint_it": '',
-        "hint_es": '',
-        "rank_ola": '',
-        "rank_rol": ''
-    }
+    const isMuted = settings((state) => state.isMuted)
 
-    const [wordsToDo, setWordsToDo] = useState(props.wordsToDo)
-    const [currentCard, setCurrentCard] = useState(wordsToDo[0])
-    
+    const wordsToDo = wordsToDoState((state) => state.wordsToDo)
+    const setWordsToDo = wordsToDoState((state) => state.setWordsToDo)
 
-    const [isCurrentFront, setIsCurrentFront] = useState(true)
-    const [isCardFlipped, setIsCardFlipped] = useState(false)
-    const [title, setTitle] = useState('')
-    const [subtitle, setSubtitle] = useState('')
-    const [sentence, setSentence] = useState('')
-    const [lang, setLang] = useState('pl-PL')
-    const [isMuted, setIsMuted] = useState(true)
-    const [isPolishMuted, setIsPolishMuted] = useState(false)
-    const speech = new SpeechSynthesisUtterance()
+    const userName = userState((state) => state.userName)
+
+    const currentCard = currentCardState((state) => state.currentCard)
+    const setCurrentCard = currentCardState((state) => state.setCurrentCard)
+
+    const isCurrentFront = currentCardState((state) => state.isCurrentFront)
+    const setIsCurrentFront = currentCardState((state) => state.setIsCurrentFront)
+
+    const isCardFlipped = currentCardState((state) => state.isCardFlipped)
+    const setIsCardFlipped = currentCardState((state) => state.setIsCardFlipped)
+
+    const title = currentCardState((state) => state.title)
+    const setTitle = currentCardState((state) => state.setTitle)
+
+    const subtitle = currentCardState((state) => state.subtitle)
+    const setSubtitle = currentCardState((state) => state.setSubtitle)
+
+    const sentence = currentCardState((state) => state.sentence)
+    const setSentence = currentCardState((state) => state.setSentence)
+
+    const lang = currentCardState((state) => state.lang)
+    const setLang = currentCardState((state) => state.setLang)
     
+    const onKeyDown = (e) => {
+        if (e.code === 'ArrowUp') {
+            handleFlipClick()
+        } else if (e.code === 'ArrowDown') {
+            handleFlipClick()
+        } else if (e.code === 'ArrowLeft') {
+            handleNokClick()
+        } else if (e.code === 'ArrowRight') {
+            handleOkClick()
+        } else if (e.code === 'Escape') {
+            props.handleBackClick()
+        }
+      };
+    
+    const [bindKeyDown, unbindKeyDown] = useEventListener({
+        type: 'keydown',
+        listener: (e) => {
+            onKeyDown(e);
+        }
+    });
+  
+    const [bindKeyUp, unbindKeyUp] = useEventListener({
+        type: 'keyup',
+        listener: (e) => {
+        }
+    });
+  
+    useEffect(() => {
+        bindKeyDown();
+        bindKeyUp();
+  
+        return () => {
+            unbindKeyDown();
+            unbindKeyUp();
+        };
+    }, [bindKeyDown, bindKeyUp, unbindKeyDown, unbindKeyUp]);
+
     useEffect(() => {
         setCurrentCard(wordsToDo[0])
         setIsCardFlipped(false)
@@ -63,63 +102,6 @@ function FlashCard(props) {
         }
     }, [isCurrentFront, currentCard])
 
-    useEffect(() => {
-        speech.text = title
-        speech.lang = lang
-        if (lang === 'pl-PL') {
-            if (isPolishMuted === false && isMuted === false) {
-                window.speechSynthesis.speak(speech)
-            }
-            
-        } else if (lang === 'de-DE'){
-            if ((isMuted === false) ) {
-                window.speechSynthesis.speak(speech)
-            }
-        }
-    }, [title])
-
-    const calculateNewDate = (rank) => {
-        const today = dayjs()
-        let newDay;
-
-        if (rank === 0 || rank === null) {
-            newDay = today.add(1, 'day')
-        } else if (rank === 1) {
-            newDay = today.add(1, 'day')
-        } else if (rank === 2) {
-            newDay = today.add(2, 'day')
-        } else if (rank === 3) {
-            newDay = today.add(3, 'day')
-        } else if (rank === 4) {
-            newDay = today.add(7, 'day')
-        } else if (rank === 5) {
-            newDay = today.add(14, 'day')
-        } else if (rank === 6) {
-            newDay = today.add(21, 'day')
-        } else if (rank === 7) {
-            newDay = today.add(30, 'day')
-        } else if (rank === 8) {
-            newDay = today.add(45, 'day')
-        } else if (rank === 9) {
-            newDay = today.add(60, 'day')
-        } else if (rank === 10) {
-            newDay = today.add(90, 'day')
-        }
-        return newDay.format('YYYY-MM-DD').toString()
-    }
-
-    const increaseRank = (rank) => {
-        if (rank >= 10)
-            return 10
-        return rank + 1
-    }
-
-    const decreaseRank = (rank) => {
-        if (rank <= 0)
-            return 0
-        return rank - 1
-    }
-
     const handleFlipClick = () => {
         setIsCardFlipped(true)
         setIsCurrentFront(!isCurrentFront)
@@ -130,14 +112,14 @@ function FlashCard(props) {
         let newCurrentCard = {...currentCard}
         let newWordsToDo = [...wordsToDo]
         let rank = 0
-        if (props.userName === 'Roland') {
+        if (userName === 'Roland') {
             rank = newCurrentCard.rank_rol
-        } else if (props.userName === 'Ola') {
+        } else if (userName === 'Ola') {
             rank = newCurrentCard.rank_ola
         }
-        if (props.userName === 'Roland') {
+        if (userName === 'Roland') {
             newCurrentCard.rank_rol = decreaseRank(rank)
-        } else if (props.userName === 'Ola') {
+        } else if (userName === 'Ola') {
             newCurrentCard.rank_ola = decreaseRank(rank)
         }
         // remove currentCard (index 0) from list toDo
@@ -154,16 +136,16 @@ function FlashCard(props) {
         let newCurrentCard = {...currentCard}
         let newWordsToDo = [...wordsToDo]
         let rank = 0
-        if (props.userName === 'Roland') {
+        if (userName === 'Roland') {
             rank = newCurrentCard.rank_rol
-        } else if (props.userName === 'Ola') {
+        } else if (userName === 'Ola') {
             rank = newCurrentCard.rank_ola
         }
-        if (props.userName === 'Roland') {
-            newCurrentCard.date_rol = calculateNewDate(rank)
+        if (userName === 'Roland') {
+            newCurrentCard.date_rol = getNewDate(rank)
             newCurrentCard.rank_rol = increaseRank(rank)
-        } else if (props.userName === 'Ola') {
-            newCurrentCard.date_ola = calculateNewDate(rank)
+        } else if (userName === 'Ola') {
+            newCurrentCard.date_ola = getNewDate(rank)
             newCurrentCard.rank_ola = increaseRank(rank)
         }
 
@@ -185,25 +167,8 @@ function FlashCard(props) {
         });
     }
 
-    const MuteSwitch = () => {
-        return (
-            <div className="flex align-items-center gap-2">
-                <InputSwitch checked={isMuted} onChange={(e) => setIsMuted(e.value)} />
-                <span className="font-bold text-bluegray-50">mute</span>
-            </div>
-        )
-    }
-    const MutePolishSwitch = () => {
-        return (
-            <div className="flex align-items-center gap-2">
-                <span className="font-bold text-bluegray-50">mute polish</span>
-                <InputSwitch checked={isPolishMuted} onChange={(e) => setIsPolishMuted(e.value)} />
-            </div>
-        )
-    }
-
     const header = () => {
-        return <Toolbar start={MuteSwitch} end={MutePolishSwitch} className="bg-gray-900 shadow-2" />
+        return <Toolbar start={MuteSwitch} className="bg-gray-900 shadow-2" />
     }
 
     const nokButton = () => {
@@ -230,25 +195,14 @@ function FlashCard(props) {
         return <Toolbar start={nokButton} center={flipButton} end={okButton} className="bg-gray-900 shadow-2" />
     }
 
-    const titleCard = () => {
-        const prefix = title.substring(0, 4)
-        if (prefix === 'der ') {
-            return <div className="text-green-500">{title}</div>
-        } else if (prefix === 'die ') {
-            return <div className="text-pink-500">{title}</div>
-        } else if (prefix === 'das ') {
-            return <div className="text-orange-500">{title}</div>
-        }
-        return title
-    }
-
     return (
         <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >
-            <Card title={titleCard} subTitle={subtitle} footer={footer} header={header} className="md:w-25rem">
+            <Card title={getColouredTitleCard(title)} subTitle={subtitle} footer={footer} header={header} className="md:w-25rem">
                 <p className="m-0">
                     {sentence}
                 </p>
             </Card>
+            <TextToSpeechEffect title={title} lang={lang} isMuted={isMuted} />
         </div>
     );
   }
