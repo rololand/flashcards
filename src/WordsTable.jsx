@@ -10,6 +10,8 @@ import { FilterMatchMode } from 'primereact/api';
 import { Toast } from 'primereact/toast';
 import 'primeicons/primeicons.css';
 
+import { userState } from './states/user';
+
 import { useEffect, useState, useRef } from 'react';
 
 import LoadingPage from './LoadingPage';
@@ -19,7 +21,11 @@ function WordsTable() {
   const [words, setWords] = useState([])
   const [isNewData, setIsNewData] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  const azure_url = 'https://flashcardsfunction.azurewebsites.net/api/words'
+  const azure_url = 'https://flashcardsfunction.azurewebsites.net/api/getWords/'
+  const userName = userState((state) => state.userName)
+  const req_body = {
+    userName: userName.toLowerCase(),
+  }
 
   const myToast = useRef(null);
 
@@ -29,7 +35,7 @@ function WordsTable() {
 
   useEffect(() => {
     const getWords = () => {
-      axios.get(azure_url)
+      axios.post(azure_url, req_body)
         .then(res => {
           setWords(res.data.reverse())
           setIsNewData(false)
@@ -61,15 +67,21 @@ function WordsTable() {
       "sentence_de": '',
       "sentence_it": '',
       "sentence_es": '',
-      "date_ola": null,
-      "date_rol": null,
       "hint_pl": '',
       "hint_en": '',
       "hint_de": '',
       "hint_it": '',
       "hint_es": '',
-      "rank_ola": '',
-      "rank_rol": ''
+      "rank_pl": 0,
+      "rank_en": 0,
+      "rank_de": 0,
+      "rank_it": 0,
+      "rank_es": 0,
+      "date_pl": null,
+      "date_en": null,
+      "date_de": null,
+      "date_it": null,
+      "date_es": null,
     }
     setWords([newCard, ...words])
   }
@@ -93,15 +105,31 @@ function WordsTable() {
         </div>
       </div>
     )
-    
-
   }
 
   const editCard = (e) => {
     setIsLoaded(false)
+    let azure_url = ''
+    let req_body = {}
     // console.log(e.data) // stare dane
     // console.log(e.newData) // nowe dane
-    axios.put(azure_url, e.newData)
+    if (e.newData.id) {
+      azure_url = "https://flashcardsfunction.azurewebsites.net/api/updateWord/"
+      req_body = {
+        userName: userName.toLowerCase(),
+        word: e.newData
+      }
+    } else {
+      azure_url = "https://flashcardsfunction.azurewebsites.net/api/addWord/"
+      // new api demands word without id when we want to add a word to db
+      const { id, ...newWord } = e.newData;
+      req_body = {
+        userName: userName.toLowerCase(),
+        word: newWord
+      }
+    }
+
+    axios.post(azure_url, req_body)
       .then(res => {
         setIsNewData(true)
       })

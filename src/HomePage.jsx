@@ -12,6 +12,7 @@ import { isLoadedState } from './states/isLoaded.js';
 import { isExerciseFinishedState} from './states/isExerciseFinished.js'
 import { userState } from './states/user';
 import { currentCardState } from './states/currentCard.js';
+import { settings } from './states/settings.js';
 
 import { useEffect } from 'react';
 import { emptyWord } from './utils.js';
@@ -33,20 +34,18 @@ function HomePage() {
 
   const userName = userState((state) => state.userName)
 
+  const lang = settings((state) => state.secondaryLanguage)
+
   useEffect(() => {
     const getWords = () => {
-      let azure_url = ''
       const today = dayjs()
-      let todayDateString = today.format('YYYY-MM-DD').toString()
-      // todayDateString = '2024-04-07'
-      if (userName.toLowerCase() === 'roland') {
-        azure_url = 'https://flashcardsfunction.azurewebsites.net/api/wordsOnRolDate/' + todayDateString
-      } else if (userName.toLowerCase() === 'ola') {
-        azure_url = 'https://flashcardsfunction.azurewebsites.net/api/wordsOnOlaDate/' + todayDateString
-      } else {
-        azure_url = 'https://flashcardsfunction.azurewebsites.net/api/words'
+      const azure_url = "https://flashcardsfunction.azurewebsites.net/api/getWordsOnDate/"
+      const req_body = {
+        userName: userName.toLowerCase(),
+        lang: lang,
+        date: today.format('YYYY-MM-DD').toString()
       }
-      axios.get(azure_url)
+      axios.post(azure_url, req_body)
         .then(res => {
           let unshuffled = res.data
           let shuffled = unshuffled
@@ -67,7 +66,7 @@ function HomePage() {
 
     setCurrentCard(emptyWord)
     getWords();
-  }, [isExerciseFinished, userName, setCurrentCard, setIsExerciseFinished, setIsLoaded, setWordsToDo]);
+  }, [isExerciseFinished, userName, setCurrentCard, setIsExerciseFinished, setIsLoaded, setWordsToDo, lang]);
 
   const handleSummaryBackClick = () => {
     setIsExerciseFinished(true)
@@ -79,14 +78,14 @@ function HomePage() {
     //work around
     //to add api to return X (as a api parameter) words with empty date
     setIsLoaded(false)
-    let azure_url = ''
-    if (userName.toLowerCase() === 'roland') {
-      azure_url = 'https://flashcardsfunction.azurewebsites.net/api/newWordsOnRolDate'
-    } else if (userName.toLowerCase() === 'ola') {
-      azure_url = 'https://flashcardsfunction.azurewebsites.net/api/newWordsOnOlaDate'
+    const req_body = {
+      userName: userName.toLowerCase(),
+      lang: lang,
+      number: 10
     }
+    const azure_url = "https://flashcardsfunction.azurewebsites.net/api/getNewWords/"
 
-    axios.get(azure_url)
+    axios.post(azure_url, req_body)
       .then(res => {
         setWordsToDo(res.data)
         setIsLoaded(true)

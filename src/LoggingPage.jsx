@@ -8,10 +8,18 @@ import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
 
 import { userState } from './states/user';
+import { settings } from './states/settings';
 
 function LoggingPage(props) {
   const setUserName = userState((state) => state.setUserName)
   const setIsLogged = userState((state) => state.setIsLogged)
+
+  const setIsMuted = settings((state) => state.setIsMuted)
+  const setLang_1 = settings((state) => state.setLang_1)
+  const setLang_2 = settings((state) => state.setLang_2)
+  const setLang_3 = settings((state) => state.setLang_3)
+  const setLang_4 = settings((state) => state.setLang_4)
+  const setLang_5 = settings((state) => state.setLang_5)
 
   const handleLogin = async (data) => {
     props.setIsFormSent(true)
@@ -26,8 +34,20 @@ function LoggingPage(props) {
       console.log('First attempt');
       const res = await axios.post(azure_url, reqBody);
       const username = res.data[0]['name'].charAt(0).toUpperCase() + res.data[0]['name'].slice(1);
+      const isMuted = res.data[0]['isMuted']
+      const lang_1 = res.data[0]['lang_1']
+      const lang_2 = res.data[0]['lang_2']
+      const lang_3 = res.data[0]['lang_3']
+      const lang_4 = res.data[0]['lang_4']
+      const lang_5 = res.data[0]['lang_5']
       setUserName(username);
       setIsLogged(true);
+      setIsMuted(isMuted)
+      setLang_1(lang_1)
+      setLang_2(lang_2)
+      setLang_3(lang_3)
+      setLang_4(lang_4)
+      setLang_5(lang_5)
       props.setLoginErrMsg('');
       return
     } catch (err) {
@@ -40,8 +60,20 @@ function LoggingPage(props) {
       console.log('Second attempt');
       const res = await axios.post(azure_url, reqBody);
       const username = res.data[0]['name'].charAt(0).toUpperCase() + res.data[0]['name'].slice(1);
+      const isMuted = res.data[0]['isMuted']
+      const lang_1 = res.data[0]['lang_1']
+      const lang_2 = res.data[0]['lang_2']
+      const lang_3 = res.data[0]['lang_3']
+      const lang_4 = res.data[0]['lang_4']
+      const lang_5 = res.data[0]['lang_5']
       setUserName(username);
       setIsLogged(true);
+      setIsMuted(isMuted)
+      setLang_1(lang_1)
+      setLang_2(lang_2)
+      setLang_3(lang_3)
+      setLang_4(lang_4)
+      setLang_5(lang_5)
       props.setLoginErrMsg('');
     } catch (err2) {
       console.log('Second attempt failed:', err2);

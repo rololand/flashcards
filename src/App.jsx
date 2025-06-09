@@ -64,7 +64,7 @@ function App() {
   const appLoader = () => {
     if (isLogged) {
       return (
-        <PrimeReactProvider>
+        <PrimeReactProvider value={{ unstyled: false }}>
         <AppMenu />
           <Routes>
             <Route index path={'/flashcards/'} element={<HomePage userName={userName} />} />
@@ -77,7 +77,7 @@ function App() {
       return <LoadingPage />
     } else {
       return (
-        <PrimeReactProvider>
+        <PrimeReactProvider value={{ unstyled: false }}>
           <LoggingPage 
             setIsFormSent={setIsFormSent} 
             setLoginErrMsg={setLoginErrMsg}

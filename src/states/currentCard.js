@@ -6,6 +6,7 @@ export const currentCardState = create((set) => ({
   word: {
     "pl-PL": '',
     "de-DE": '',
+    "en-GB": '',
     "it-IT": '',
     "es-ES": '',
   },
@@ -13,6 +14,7 @@ export const currentCardState = create((set) => ({
   sentence: {
     "pl-PL": '',
     "de-DE": '',
+    "en-GB": '',
     "it-IT": '',
     "es-ES": '',
   },
@@ -20,6 +22,7 @@ export const currentCardState = create((set) => ({
   hint: {
     "pl-PL": '',
     "de-DE": '',
+    "en-GB": '',
     "it-IT": '',
     "es-ES": '',
   },
@@ -33,18 +36,21 @@ export const currentCardState = create((set) => ({
         word: {
           "pl-PL": newCurrentCard['pl'],
           "de-DE": newCurrentCard['de'],
+          "en-GB": newCurrentCard['en'],
           "it-IT": newCurrentCard['it'],
           "es-ES": newCurrentCard['es'],
         },
         sentence: {
           "pl-PL": newCurrentCard['sentence_pl'],
           "de-DE": newCurrentCard['sentence_de'],
+          "en-GB": newCurrentCard['sentence_en'],
           "it-IT": newCurrentCard['sentence_it'],
           "es-ES": newCurrentCard['sentence_es'],
         },
         hint: {
           "pl-PL": newCurrentCard['hint_pl'],
           "de-DE": newCurrentCard['hint_de'],
+          "en-GB": newCurrentCard['hint_en'],
           "it-IT": newCurrentCard['hint_it'],
           "es-ES": newCurrentCard['hint_es'],
         },

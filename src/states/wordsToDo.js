@@ -4,6 +4,7 @@ import { emptyWord, increaseRank, decreaseRank, getNewDate } from '../utils'
 import { userState } from './user'
 import { currentCardState } from './currentCard'
 import { currentPageState } from './currentPage'
+import { settings } from './settings';
 import { useTTS } from './tts';
 
 export const wordsToDoState = create((set, get) => ({
@@ -20,23 +21,35 @@ export const wordsToDoState = create((set, get) => ({
   handleNokClick: () => {
     const { wordsToDo } = get();
     const setWordsToDo = get().setWordsToDo;
-    const userName = userState.getState().userName;
-    const clearTTS = useTTS.getState().clearQueue
+    const lang = settings.getState().secondaryLanguage;
+    const clearTTS = useTTS.getState().clearQueue;
     clearTTS()
 
     let newCurrentCard = {...wordsToDo[0]}
     let newWordsToDo = [...wordsToDo]
     let rank = 0
-    if (userName === 'Roland') {
-        rank = newCurrentCard.rank_rol
-    } else if (userName === 'Ola') {
-        rank = newCurrentCard.rank_ola
+    //get proper rank
+    if (lang === 'de-DE') {
+      rank = newCurrentCard.rank_de
+    } else if (lang === 'en-GB') {
+      rank = newCurrentCard.rank_en
+    } else if (lang === 'es-ES') {
+      rank = newCurrentCard.rank_es
+    } else if (lang === 'it-IT') {
+      rank = newCurrentCard.rank_it
     }
-    if (userName === 'Roland') {
-        newCurrentCard.rank_rol = decreaseRank(rank)
-    } else if (userName === 'Ola') {
-        newCurrentCard.rank_ola = decreaseRank(rank)
+
+    //update proper rank
+    if (lang === 'de-DE') {
+      newCurrentCard.rank_de = decreaseRank(rank)
+    } else if (lang === 'en-GB') {
+      newCurrentCard.rank_en = decreaseRank(rank)
+    } else if (lang === 'es-ES') {
+      newCurrentCard.rank_es = decreaseRank(rank)
+    } else if (lang === 'it-IT') {
+      newCurrentCard.rank_it = decreaseRank(rank)
     }
+
     // remove currentCard (index 0) from list toDo
     newWordsToDo = newWordsToDo.slice(1)
     // add newCurrentCard to list toDo
@@ -50,6 +63,7 @@ export const wordsToDoState = create((set, get) => ({
     const { wordsToDo } = get();
     const setWordsToDo = get().setWordsToDo;
     const userName = userState.getState().userName;
+    const lang = settings.getState().secondaryLanguage;
     const setCurrentCard = currentCardState.getState().setCurrentCard
     const setCurrentPage = currentPageState.getState().setCurrentPage
     const clearTTS = useTTS.getState().clearQueue
@@ -59,22 +73,41 @@ export const wordsToDoState = create((set, get) => ({
     let newCurrentCard = {...wordsToDo[0]}
     let newWordsToDo = [...wordsToDo]
     let rank = 0
-    if (userName === 'Roland') {
-        rank = newCurrentCard.rank_rol
-    } else if (userName === 'Ola') {
-        rank = newCurrentCard.rank_ola
+
+    //get proper rank
+    if (lang === 'de-DE') {
+      rank = newCurrentCard.rank_de
+    } else if (lang === 'en-GB') {
+      rank = newCurrentCard.rank_en
+    } else if (lang === 'es-ES') {
+      rank = newCurrentCard.rank_es
+    } else if (lang === 'it-IT') {
+      rank = newCurrentCard.rank_it
     }
-    if (userName === 'Roland') {
-        newCurrentCard.date_rol = getNewDate(rank)
-        newCurrentCard.rank_rol = increaseRank(rank)
-    } else if (userName === 'Ola') {
-        newCurrentCard.date_ola = getNewDate(rank)
-        newCurrentCard.rank_ola = increaseRank(rank)
+
+    //update proper rank
+    if (lang === 'de-DE') {
+      newCurrentCard.date_de = getNewDate(rank)
+      newCurrentCard.rank_de = increaseRank(rank)
+    } else if (lang === 'en-GB') {
+      newCurrentCard.date_en = getNewDate(rank)
+      newCurrentCard.rank_en = increaseRank(rank)
+    } else if (lang === 'es-ES') {
+      newCurrentCard.date_es = getNewDate(rank)
+      newCurrentCard.rank_es = increaseRank(rank)
+    } else if (lang === 'it-IT') {
+      newCurrentCard.date_it = getNewDate(rank)
+      newCurrentCard.rank_it = increaseRank(rank)
     }
 
     // update sql
-    const azure_url = 'https://flashcardsfunction.azurewebsites.net/api/words'
-    axios.put(azure_url, newCurrentCard)
+    const azure_url = 'https://flashcardsfunction.azurewebsites.net/api/updateWord/'
+    const req_body = {
+      userName: userName.toLowerCase(),
+      word: newCurrentCard
+    }
+
+    axios.post(azure_url, req_body)
     .then(res => {
         // remove from the list
         newWordsToDo = newWordsToDo.slice(1)
