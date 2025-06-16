@@ -30,8 +30,19 @@ const TextToSpeechEngine = () => {
 
     if (lang === 'pl-PL') {
       speechConfig.speechSynthesisVoiceName = 'pl-PL-ZofiaNeural';
-    } else if (lang === 'de-DE') {
+      speechConfig.speechSynthesisLanguage = 'pl-PL';
+    } else if (lang === 'de-DE'){
       speechConfig.speechSynthesisVoiceName = 'de-DE-KatjaNeural';
+      speechConfig.speechSynthesisLanguage = 'de-DE';
+    } else if (lang === 'en-GB'){
+      speechConfig.speechSynthesisVoiceName = 'en-GB-AbbiNeural';
+      speechConfig.speechSynthesisLanguage = 'en-GB';
+    } else if (lang === 'it-IT'){
+      speechConfig.speechSynthesisVoiceName = 'it-IT-IsabellaNeural';
+      speechConfig.speechSynthesisLanguage = 'it-IT';
+    } else if (lang === 'es-ES'){
+      speechConfig.speechSynthesisVoiceName = 'es-ES-XimenaNeural';
+      speechConfig.speechSynthesisLanguage = 'es-ES';
     }
 
     const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
