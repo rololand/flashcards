@@ -4,7 +4,10 @@ export const isLoadedState = create((set) => ({
   isLoaded: false,
 
   setIsLoaded: (flag) =>
-    set(() => ({
+    set(() => {
+      // console.log('set isLoaded: ' + flag)
+      return {
         isLoaded: flag,
-    })),
+      }
+    }),
 }))

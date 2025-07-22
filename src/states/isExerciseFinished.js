@@ -4,7 +4,11 @@ export const isExerciseFinishedState = create((set) => ({
   isExerciseFinished: false,
 
   setIsExerciseFinished: (flag) =>
-    set(() => ({
-        isExerciseFinished: flag,
-    })),
+    set(() => {
+      // console.log('set isExerciseFinished: ' + flag)
+      return {
+          isExerciseFinished: flag,
+      }
+    }
+      ),
 }))

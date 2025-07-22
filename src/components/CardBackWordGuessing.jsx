@@ -14,6 +14,8 @@ import { currentCardState } from '../states/currentCard';
 import { settings } from '../states/settings';
 import { wordsToDoState } from '../states/wordsToDo.js';
 
+import { playAudioFromCache } from '../playAudioFromCache.js'
+
 
 function CardBackWordGuessing() {
   const primaryLanguage = settings((state) => state.primaryLanguage)
@@ -61,7 +63,8 @@ function CardBackWordGuessing() {
 
   useEffect(() => {
     if(!isMuted) {
-      speak(secondaryTitle, secondaryLanguage);
+      // speak(secondaryTitle, secondaryLanguage);
+      playAudioFromCache(secondaryTitle, secondaryLanguage)
     }
   }, [secondaryTitle, secondaryLanguage, isMuted, speak]);
   

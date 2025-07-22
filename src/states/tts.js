@@ -36,4 +36,14 @@ export const useTTS = create((set, get) => ({
   },
 
   markDisposed: () => set({ isDisposed: true }),
+
+  audioCache: new Map(),
+
+  cacheAudio: (key, arrayBuffer) => {
+    get().audioCache.set(key, arrayBuffer);
+  },
+
+  getAudioFromCache: (key) => {
+    return get().audioCache.get(key);
+  },
 }));

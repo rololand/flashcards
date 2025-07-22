@@ -10,7 +10,7 @@ import { isLoadedState } from './states/isLoaded.js';
 import { isExerciseFinishedState} from './states/isExerciseFinished.js';
 import { currentCardState } from './states/currentCard.js';
 
-function ExercisePage() {
+function ExercisePage(props) {
   const wordsToDo = wordsToDoState((state) => state.wordsToDo)
   const handleNokClick = wordsToDoState((state) => state.handleNokClick);
   const handleOkClick = wordsToDoState((state) => state.handleOkClick);
@@ -37,6 +37,7 @@ function ExercisePage() {
       setIsCardFlipped(false)
       setIsCurrentFront(true)
       setCurrentPage('homePage')
+      props.getWords();
     } else if (e.code === 'ArrowUp') {
       setIsCardFlipped(true)
       setIsCurrentFront(!isCurrentFront)

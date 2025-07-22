@@ -15,6 +15,8 @@ import CardHeader from './CardHeader.jsx'
 import { currentCardState } from '../states/currentCard.js';
 import { settings } from '../states/settings.js';
 
+import { playAudioFromCache } from '../playAudioFromCache.js'
+
 
 function CardFrontWordGuessing() {
   const lang = settings((state) => state.primaryLanguage)
@@ -31,7 +33,8 @@ function CardFrontWordGuessing() {
   
   useEffect(() => {
     if(!isMuted) {
-      speak(title, lang);
+      // speak(title, lang);
+      playAudioFromCache(title, lang)
     }
   }, [title, lang, isMuted, speak]);
 

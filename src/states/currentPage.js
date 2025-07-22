@@ -4,7 +4,10 @@ export const currentPageState = create((set) => ({
   currentPage: 'homePage',
 
   setCurrentPage: (newCurrentPage) =>
-    set(() => ({
+    set(() => {
+      // console.log('set currentPage: ' + newCurrentPage)
+      return {
         currentPage: newCurrentPage,
-    })),
+      }
+    }),
 }))

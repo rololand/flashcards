@@ -12,10 +12,13 @@ export const wordsToDoState = create((set, get) => ({
   wordsToDoCount: 0,
 
   setWordsToDo: (newWordsToDo) =>
-    set(() => ({
-      wordsToDo: newWordsToDo,
-      wordsToDoCount: newWordsToDo.length,
-    })),
+    set(() => {
+      // console.log('New wordsToDo')
+      return {
+        wordsToDo: newWordsToDo,
+        wordsToDoCount: newWordsToDo.length,
+      }
+    }),
   
 
   handleNokClick: () => {
@@ -107,17 +110,16 @@ export const wordsToDoState = create((set, get) => ({
       word: newCurrentCard
     }
 
+    // remove from the list
+    newWordsToDo = newWordsToDo.slice(1)
+    // update list and set done flag if needed
+    if (newWordsToDo.length === 0) {
+        setCurrentCard(emptyWord)
+        setCurrentPage('exerciseSummary')
+    }
+    setWordsToDo(newWordsToDo)
+
     axios.post(azure_url, req_body)
-    .then(res => {
-        // remove from the list
-        newWordsToDo = newWordsToDo.slice(1)
-        // update list and set done flag if needed
-        if (newWordsToDo.length === 0) {
-            setCurrentCard(emptyWord)
-            setCurrentPage('exerciseSummary')
-        }
-        setWordsToDo(newWordsToDo)
-    })
     .catch(err => {
       console.log('Error: ' + err);
     });

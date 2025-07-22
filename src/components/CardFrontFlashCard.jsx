@@ -12,6 +12,8 @@ import CardFooter from './CardFooter.jsx';
 import { currentCardState } from '../states/currentCard';
 import { settings } from '../states/settings';
 
+import { playAudioFromCache } from '../playAudioFromCache.js'
+
 
 function CardFrontFlashCard() {
   const lang = settings((state) => state.primaryLanguage)
@@ -25,7 +27,8 @@ function CardFrontFlashCard() {
   
   useEffect(() => {
     if(!isMuted) {
-      speak(title, lang);
+      // speak(title, lang);
+      playAudioFromCache(title, lang)
     }
   }, [title, lang, isMuted, speak]);
 
