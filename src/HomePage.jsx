@@ -29,7 +29,7 @@ function HomePage() {
   const isLoaded = isLoadedState((state) => state.isLoaded)
   const setIsLoaded = isLoadedState((state) => state.setIsLoaded)
 
-  const isExerciseFinished = isExerciseFinishedState((state) => state.isExerciseFinished)
+  // const isExerciseFinished = isExerciseFinishedState((state) => state.isExerciseFinished)
   const setIsExerciseFinished = isExerciseFinishedState((state) => state.setIsExerciseFinished)
 
   const setCurrentCard = currentCardState((state) => state.setCurrentCard)
@@ -37,6 +37,7 @@ function HomePage() {
   const userName = userState((state) => state.userName)
 
   const lang = settings((state) => state.secondaryLanguage)
+  const numberOfNewWords = settings((state) => state.numberOfNewWords)
   
   const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -53,24 +54,6 @@ function HomePage() {
     // console.log("Caching finished");
     setIsLoaded(true);
   };
-
-  // const doCaching = async (cards) => {
-  //   const promises = cards.map(async (card) => {
-  //     try {
-  //       await fetchAndCacheAudio(card.pl, 'pl-PL');
-  //       await fetchAndCacheAudio(card[lang.slice(0, 2)], lang);
-  //     } catch (err) {
-  //       console.error(`Błąd podczas cache’owania karty:`, card.id, card.pl, card[lang.slice(0, 2)], err);
-  //       // Opcjonalnie możesz zwrócić status błędu, jeśli chcesz go śledzić
-  //       return { success: false, card, error: err };
-  //     }
-  //   });
-
-  //   await Promise.all(promises);
-
-  //   console.log("Caching finished");
-  //   setIsLoaded(true);
-  // };
 
   const getWords = async () => {
     // console.log("get words")
@@ -120,8 +103,9 @@ function HomePage() {
     const req_body = {
       userName: userName.toLowerCase(),
       lang: lang,
-      number: 10
+      number: numberOfNewWords[lang]
     }
+    // console.log(req_body)
     const azure_url = "https://flashcardsfunction.azurewebsites.net/api/getNewWords/"
 
     axios.post(azure_url, req_body)

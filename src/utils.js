@@ -73,6 +73,7 @@ export const decreaseRank = (rank) => {
 
 export const getColouredTitleCard = (title) => {
     const prefix = title.substring(0, 4)
+    title = title.replace(/ /g, '\u00A0')
     if (prefix === 'der ') {
         return <span className="text-green-500">{title}</span>
     } else if (prefix === 'die ') {
@@ -93,6 +94,9 @@ export const replaceSpecialCharacters = (word) => {
 }
 
 export const compareWords = (guess, word, hint) => {
+    if (guess === '') {
+        return false
+    }
     guess = replaceSpecialCharacters(guess)
     word = replaceSpecialCharacters(word)
 

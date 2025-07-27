@@ -8,7 +8,7 @@ export const settings = create((set, get) => ({
     set(() => ({
       isMuted: flag,
     })),
-
+  uiLang: "pl-PL",
   primaryLanguage: 'pl-PL',
   setPrimaryLanguage: (language) =>
     set(() => ({
@@ -20,6 +20,14 @@ export const settings = create((set, get) => ({
     set(() => ({
       secondaryLanguage: language,
     })),
+
+  numberOfNewWords: {
+    "pl-PL": 10,
+    "de-DE": 10,
+    "en-GB": 30,
+    "it-IT": 3,
+    "es-ES": 10
+  },
   
   lang_1: '',
   lang_2: '',

@@ -1,0 +1,205 @@
+{
+    "1": {
+        "pl-PL": "Cześć",
+        "en-GB": "Welcome",
+        "de-DE": "Hallo",
+        "it-IT": "Ciao",
+        "es-ES": "Ciao"
+    },
+    "2": {
+        "pl-PL": "Wybierz język",
+        "en-GB": "Select a Language",
+        "de-DE": "Select a Language",
+        "it-IT": "Select a Language",
+        "es-ES": "Select a Language"
+    },
+    "3": {
+        "pl-PL": "Masz",
+        "en-GB": "You have",
+        "de-DE": "Du hast",
+        "it-IT": "You have",
+        "es-ES": "You have"
+    },
+    "4": {
+        "pl-PL": "słów do nauki!",
+        "en-GB": "words to practice!",
+        "de-DE": "words to practice!",
+        "it-IT": "words to practice!",
+        "es-ES": "words to practice!"
+    },
+    "5": {
+        "pl-PL": "Nauka nowych słów",
+        "en-GB": "Learn new words",
+        "de-DE": "Learn new words",
+        "it-IT": "Learn new words",
+        "es-ES": "Learn new words"
+    },
+    "6": {
+        "pl-PL": "Trenuj pisanie",
+        "en-GB": "Exercise! (word guessing)",
+        "de-DE": "Exercise! (word guessing)",
+        "it-IT": "Exercise! (word guessing)",
+        "es-ES": "Exercise! (word guessing)"
+    },
+    "7": {
+        "pl-PL": "Trenuj fiszki",
+        "en-GB": "Exercise! (flashcards)",
+        "de-DE": "Exercise! (flashcards)",
+        "it-IT": "Exercise! (flashcards)",
+        "es-ES": "Exercise! (flashcards)"
+    },
+    "8": {
+        "pl-PL": "Nauka",
+        "en-GB": "Home",
+        "de-DE": "Home",
+        "it-IT": "Home",
+        "es-ES": "Home"
+    },
+    "9": {
+        "pl-PL": "Biblioteka słów",
+        "en-GB": "Library",
+        "de-DE": "Library",
+        "it-IT": "Library",
+        "es-ES": "Library"
+    },
+    "10": {
+        "pl-PL": "Ustawienia",
+        "en-GB": "Settings",
+        "de-DE": "Settings",
+        "it-IT": "Settings",
+        "es-ES": "Settings"
+    },
+    "11": {
+        "pl-PL": "Świetnie",
+        "en-GB": "Excellent",
+        "de-DE": "Excellent",
+        "it-IT": "Excellent",
+        "es-ES": "Excellent"
+    },
+    "12": {
+        "pl-PL": "Skończyłeś ćwiczenie",
+        "en-GB": "You have finished exercise!",
+        "de-DE": "You have finished exercise!",
+        "it-IT": "You have finished exercise!",
+        "es-ES": "You have finished exercise!"
+    },
+    "13": {
+        "pl-PL": "Powrót",
+        "en-GB": "Back",
+        "de-DE": "Back",
+        "it-IT": "Back",
+        "es-ES": "Back"
+    },
+    "14": {
+        "pl-PL": "Nie",
+        "en-GB": "NOK",
+        "de-DE": "NOK",
+        "it-IT": "NOK",
+        "es-ES": "NOK"
+    },
+    "15": {
+        "pl-PL": "Odwróć",
+        "en-GB": "FLIP",
+        "de-DE": "FLIP",
+        "it-IT": "FLIP",
+        "es-ES": "FLIP"
+    },
+    "16": {
+        "pl-PL": "Tak",
+        "en-GB": "OK",
+        "de-DE": "OK",
+        "it-IT": "OK",
+        "es-ES": "OK"
+    },
+    "17": {
+        "pl-PL": "Wycisz",
+        "en-GB": "Mute",
+        "de-DE": "Mute",
+        "it-IT": "Mute",
+        "es-ES": "Mute"
+    },
+    "18": {
+        "pl-PL": "Sprawdź",
+        "en-GB": "Check",
+        "de-DE": "Check",
+        "it-IT": "Check",
+        "es-ES": "check"
+    },
+    "19": {
+        "pl-PL": "BRAWO",
+        "en-GB": "EXCELLENT",
+        "de-DE": "EXCELLENT",
+        "it-IT": "EXCELLENT",
+        "es-ES": "EXCELLENT"
+    },
+    "20": {
+        "pl-PL": "NIESTETY",
+        "en-GB": "TRY AGAIN",
+        "de-DE": "TRY AGAIN",
+        "it-IT": "TRY AGAIN",
+        "es-ES": "TRY AGAIN"
+    },
+    "21": {
+        "pl-PL": "Twoja próba:",
+        "en-GB": "Your guess:",
+        "de-DE": "Your guess:",
+        "it-IT": "Your guess:",
+        "es-ES": "Your guess:"
+    },
+    "22": {
+        "pl-PL": "Kontynuuj",
+        "en-GB": "Continue",
+        "de-DE": "Continue",
+        "it-IT": "Continue",
+        "es-ES": "Continue"
+    },
+    "23": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "24": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "25": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "26": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "27": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "28": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "29": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    }
+}

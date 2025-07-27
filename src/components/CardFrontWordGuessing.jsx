@@ -17,9 +17,12 @@ import { settings } from '../states/settings.js';
 
 import { playAudioFromCache } from '../playAudioFromCache.js'
 
+import uitxt from '../uitxt.json'
+
 
 function CardFrontWordGuessing() {
   const lang = settings((state) => state.primaryLanguage)
+  const uiLang = settings((state) => state.uiLang)
   const isMuted = settings((state) => state.isMuted)
 
   const title = currentCardState((state) => state.word[lang])
@@ -58,8 +61,8 @@ function CardFrontWordGuessing() {
     },
     onSubmit: (data) => {
       setGuess(data.word)
-      console.log('submit!')
-      console.log('guess', data.word)
+      // console.log('submit!')
+      // console.log('guess:', data.word)
       handleCheckClick();
       formik.resetForm();
     }
@@ -81,7 +84,7 @@ function CardFrontWordGuessing() {
           {getFormErrorMessage('word')}
         </div>
 
-        <Button type="submit" label="check" className="mt-2" />
+        <Button type="submit" label={uitxt["18"][uiLang]} className="mt-2" />
       </form>
     );
   }

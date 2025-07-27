@@ -1,5 +1,5 @@
 import axios from 'axios';
-import TextToSpeechEffect from './TextToSpeechEffect';
+import TextToSpeechEffect from './TextToSpeechEffect.js';
 
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
@@ -16,7 +16,7 @@ import { getNewDate, emptyWord, increaseRank, decreaseRank, getColouredTitleCard
 
 import { settings } from './states/settings.js';
 import { wordsToDoState } from './states/wordsToDo.js';
-import { userState } from './states/user';
+import { userState } from './states/user.js';
 import { currentCardState } from './states/currentCard.js';
 
 function WordGuessing(props) {

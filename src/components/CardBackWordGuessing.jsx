@@ -16,10 +16,13 @@ import { wordsToDoState } from '../states/wordsToDo.js';
 
 import { playAudioFromCache } from '../playAudioFromCache.js'
 
+import uitxt from '../uitxt.json'
+
 
 function CardBackWordGuessing() {
   const primaryLanguage = settings((state) => state.primaryLanguage)
   const secondaryLanguage = settings((state) => state.secondaryLanguage)
+  const uiLang = settings((state) => state.uiLang)
   const isMuted = settings((state) => state.isMuted)
 
   const handleNokClick = wordsToDoState((state) => state.handleNokClick);
@@ -93,12 +96,12 @@ function CardBackWordGuessing() {
   const displayResult = () => {
     if (result) {
       return <div className="text-5xl font-bold text-teal-200" >
-        EXCELLENT !
+        {uitxt["19"][uiLang]}
       </div>
     }
     return <div>
-      <div className="text-5xl font-bold text-red-700" >TRY AGAIN</div>
-      <p>Your guess: {guess} </p>
+      <div className="text-5xl font-bold text-red-700" >{uitxt["20"][uiLang]}</div>
+      <p>{uitxt["21"][uiLang]} {guess} </p>
     </div>
   }
 
@@ -106,14 +109,14 @@ function CardBackWordGuessing() {
     if (secondarySubtitle) {
       return <span>
       <p>{getColouredTitleCard(secondaryTitle)}{' '}
-      ({secondarySubtitle
+      (&#65279;{secondarySubtitle
         .split(',')
         .map((title, i, arr) => (
           <Fragment key={i}>
             {getColouredTitleCard(title.trim())}
             {i < arr.length - 1 && ', '}
           </Fragment>
-        ))})
+        ))}&#65279;)
       </p>
     </span>
     }
@@ -126,14 +129,14 @@ function CardBackWordGuessing() {
     if (primarySubtitle) {
       return <span>
       <p>{getColouredTitleCard(primaryTitle)}{' '}
-      ({primarySubtitle
+      (&#65279;{primarySubtitle
         .split(',')
         .map((title, i, arr) => (
           <Fragment key={i}>
             {getColouredTitleCard(title.trim())}
             {i < arr.length - 1 && ', '}
           </Fragment>
-        ))})
+        ))}&#65279;)
       </p>
     </span>
     }
@@ -144,7 +147,7 @@ function CardBackWordGuessing() {
 
   const continueForm = () => {
     return (
-        <Button type="submit" label="continue" className="mt-2" onClick={handleContinueClick} />
+        <Button type="submit" label={uitxt["22"][uiLang]} className="mt-2" onClick={handleContinueClick} />
     );
   }
 

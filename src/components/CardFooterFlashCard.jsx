@@ -3,6 +3,9 @@ import { Button } from 'primereact/button';
 
 import { currentCardState } from '../states/currentCard';
 import { wordsToDoState } from '../states/wordsToDo.js';
+import { settings } from "../states/settings.js";
+
+import uitxt from '../uitxt.json'
 
 function CardFooterFlashCard() {
   const setIsCurrentFront = currentCardState((state) => state.setIsCurrentFront)
@@ -13,11 +16,13 @@ function CardFooterFlashCard() {
   const handleNokClick = wordsToDoState((state) => state.handleNokClick);
   const handleOkClick = wordsToDoState((state) => state.handleOkClick);
 
+  const uiLang = settings((state) => state.uiLang)
+
   const nokButton = () => {
     if (isCardFlipped) {
-      return <Button label="NOK" onClick={handleNokClick} />
+      return <Button label={uitxt["14"][uiLang]} onClick={handleNokClick} />
     } else {
-      return <Button label="NOK" onClick={handleNokClick} disabled />
+      return <Button label={uitxt["14"][uiLang]} onClick={handleNokClick} disabled />
     }
   }
 
@@ -27,14 +32,14 @@ function CardFooterFlashCard() {
   }
 
   const flipButton = () => {
-    return <Button label="FLIP" onClick={handleFlipClick}/>
+    return <Button label={uitxt["15"][uiLang]} onClick={handleFlipClick}/>
   }
 
   const okButton = () => {
     if (isCardFlipped) {
-      return <Button label="OK" onClick={handleOkClick} />
+      return <Button label={uitxt["16"][uiLang]} onClick={handleOkClick} />
     } else {
-      return <Button label="OK" onClick={handleOkClick} disabled />
+      return <Button label={uitxt["16"][uiLang]} onClick={handleOkClick} disabled />
     }
   }
 
