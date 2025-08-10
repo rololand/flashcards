@@ -47,6 +47,15 @@ function WelcomePage(props) {
     return <Button label={uitxt["5"][uiLang]} onClick={props.handleLearnClick} />
   }
 
+  const buttonsExercises = () => {
+    if (secondaryLanguage === 'de-DE')
+      return <div className="flex flex-wrap align-items-center justify-content-center ">
+          <div className="flex flex-column align-items-center justify-content-center h-4rem font-bold border-round gap-2" >
+            <Button label={uitxt["23"][uiLang]} onClick={() => {setCurrentPage('irregularVerbs')}} />
+          </div>
+        </div>
+  }
+
   return (
     <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >
       <div className="flex flex-column">
@@ -73,6 +82,9 @@ function WelcomePage(props) {
         </div>
         <div className="flex align-items-center justify-content-center h-4rem border-round m-2">
           {buttons()}
+        </div>
+        <div className="flex align-items-center justify-content-center h-4rem border-round m-2">
+          {buttonsExercises()}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import WelcomePage from "./WelcomePage";
 import ExercisePage from './ExercisePage.jsx';
 import SummaryPage from './SummaryPage';
+import IrregularVerbs from './IrregularVerbs.jsx'
 import LoadingPage from './LoadingPage';
 
 import { wordsToDoState } from './states/wordsToDo.js';
@@ -131,6 +132,8 @@ function HomePage() {
         return <ExercisePage getWords={getWords} />
       if (currentPage === 'exerciseSummary')
         return <SummaryPage handleSummaryBackClick={handleSummaryBackClick} />
+      if (currentPage === 'irregularVerbs')
+        return <IrregularVerbs handleSummaryBackClick={handleSummaryBackClick} />
     } else {
       return <LoadingPage />
     }
