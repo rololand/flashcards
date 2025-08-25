@@ -6,6 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { Checkbox } from 'primereact/checkbox';
 import { FilterMatchMode } from 'primereact/api';
 import { Toast } from 'primereact/toast';
 import 'primeicons/primeicons.css';
@@ -37,7 +38,8 @@ function WordsTable() {
     const getWords = () => {
       axios.post(azure_url, req_body)
         .then(res => {
-          setWords(res.data.reverse())
+          // setWords(res.data.reverse())
+          setWords(res.data)
           setIsNewData(false)
           setIsLoaded(true)
         })
@@ -149,12 +151,30 @@ function WordsTable() {
     );
   };
 
+  const [emptyChecked, setEmptyChecked] = useState(true);
+
+  const emptyFilter = (rowData) => {
+      if (!emptyChecked) return true;
+      const value = rowData.sentence_pl;
+      return value === null || value === undefined || value.trim() === '';
+  };
+
+  const headerCheckbox = (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>sentence_pl<br />wyświetl puste</span>
+          <Checkbox
+              checked={emptyChecked}
+              onChange={(e) => setEmptyChecked(e.checked)}
+          />
+      </div>
+  );
   if (isLoaded) {
+    //remove first={40} zeby ladowalo sie od pierwszej strony
     return (
       <PrimeReactProvider>
-        <DataTable value={words} dataKey="id" editMode='row' onRowEditComplete={editCard} filters={filters} header={header} emptyMessage="Loading..." paginator rows={10} rowsPerPageOptions={[10, 20, 50, 100]} tableStyle={{ minWidth: '50rem' }}>
+        <DataTable value={words.filter(emptyFilter)} dataKey="id" editMode='row' onRowEditComplete={editCard} filters={filters} filterDisplay="menu" header={header} emptyMessage="Loading..." paginator first={40} rows={10} rowsPerPageOptions={[10, 20, 50, 100]} tableStyle={{ minWidth: '50rem' }}>
           <Column rowEditor={true} headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
-          <Column field="id" header="id"  style={{ width: '2%' }}></Column>
+          <Column field="id" header="id"  style={{ width: '2%' }} sortable></Column>
           <Column field="pl" header="pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
           <Column field="en" header="en" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
           <Column field="de" header="de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
@@ -165,7 +185,9 @@ function WordsTable() {
           <Column field="hint_de" header="hint_de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
           <Column field="hint_it" header="hint_it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
           <Column field="hint_es" header="hint_es" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
-          <Column field="sentence_pl" header="sentence_pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
+          <Column field="sentence_pl" header={headerCheckbox} editor={(options) => textEditor(options)} style={{ width: '9%' }}
+                filterMatchMode="custom" filterFunction={emptyFilter}
+            />
           <Column field="sentence_en" header="sentence_en" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
           <Column field="sentence_de" header="sentence_de" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
           <Column field="sentence_it" header="sentence_it" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>

@@ -175,27 +175,97 @@
         "es-ES": "Show answers"
     },
     "26": {
-        "pl-PL": "",
-        "en-GB": "",
-        "de-DE": "",
-        "it-IT": "",
-        "es-ES": ""
+        "pl-PL": "Spójniki",
+        "en-GB": "Conjunctions",
+        "de-DE": "Conjunctions",
+        "it-IT": "Conjunctions",
+        "es-ES": "Conjunctions"
     },
     "27": {
-        "pl-PL": "",
-        "en-GB": "",
-        "de-DE": "",
-        "it-IT": "",
-        "es-ES": ""
+        "pl-PL": "Wybierz poprawny szyk zdania:",
+        "en-GB": "Choose the correct word order:",
+        "de-DE": "Choose the correct word order:",
+        "it-IT": "Choose the correct word order:",
+        "es-ES": "Choose the correct word order:"
     },
     "28": {
+        "pl-PL": "Kolejny spójnik",
+        "en-GB": "Next",
+        "de-DE": "Next",
+        "it-IT": "Next",
+        "es-ES": "Next"
+    },
+    "29": {
+        "pl-PL": "Prosty",
+        "en-GB": "Normal",
+        "de-DE": "Normal",
+        "it-IT": "Normal",
+        "es-ES": "Normal"
+    },
+    "30": {
+        "pl-PL": "Przestawny",
+        "en-GB": "Flipped",
+        "de-DE": "Flipped",
+        "it-IT": "Flipped",
+        "es-ES": "Flipped"
+    },
+    "31": {
+        "pl-PL": "Końcowy",
+        "en-GB": "Ended",
+        "de-DE": "Ended",
+        "it-IT": "Ended",
+        "es-ES": "Ended"
+    },
+    "32": {
         "pl-PL": "",
         "en-GB": "",
         "de-DE": "",
         "it-IT": "",
         "es-ES": ""
     },
-    "29": {
+    "33": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "34": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "35": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "36": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "37": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "38": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "39": {
         "pl-PL": "",
         "en-GB": "",
         "de-DE": "",

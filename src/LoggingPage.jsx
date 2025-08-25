@@ -33,13 +33,14 @@ function LoggingPage(props) {
     try {
       console.log('First attempt');
       const res = await axios.post(azure_url, reqBody);
-      const username = res.data[0]['name'].charAt(0).toUpperCase() + res.data[0]['name'].slice(1);
-      const isMuted = res.data[0]['isMuted']
-      const lang_1 = res.data[0]['lang_1']
-      const lang_2 = res.data[0]['lang_2']
-      const lang_3 = res.data[0]['lang_3']
-      const lang_4 = res.data[0]['lang_4']
-      const lang_5 = res.data[0]['lang_5']
+      console.log(res.data)
+      const username = res.data['name'].charAt(0).toUpperCase() + res.data['name'].slice(1);
+      const isMuted = res.data['isMuted']
+      const lang_1 = res.data['lang_1']
+      const lang_2 = res.data['lang_2']
+      const lang_3 = res.data['lang_3']
+      const lang_4 = res.data['lang_4']
+      const lang_5 = res.data['lang_5']
       setUserName(username);
       setIsLogged(true);
       setIsMuted(isMuted)
@@ -59,13 +60,13 @@ function LoggingPage(props) {
     try {
       console.log('Second attempt');
       const res = await axios.post(azure_url, reqBody);
-      const username = res.data[0]['name'].charAt(0).toUpperCase() + res.data[0]['name'].slice(1);
-      const isMuted = res.data[0]['isMuted']
-      const lang_1 = res.data[0]['lang_1']
-      const lang_2 = res.data[0]['lang_2']
-      const lang_3 = res.data[0]['lang_3']
-      const lang_4 = res.data[0]['lang_4']
-      const lang_5 = res.data[0]['lang_5']
+      const username = res.data['name'].charAt(0).toUpperCase() + res.data['name'].slice(1);
+      const isMuted = res.data['isMuted']
+      const lang_1 = res.data['lang_1']
+      const lang_2 = res.data['lang_2']
+      const lang_3 = res.data['lang_3']
+      const lang_4 = res.data['lang_4']
+      const lang_5 = res.data['lang_5']
       setUserName(username);
       setIsLogged(true);
       setIsMuted(isMuted)

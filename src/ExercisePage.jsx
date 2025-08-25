@@ -1,5 +1,6 @@
 import { useEventListener } from 'primereact/hooks';
 import { useEffect } from 'react';
+import { Button } from 'primereact/button';
 
 import CardFront from './components/CardFront.jsx';
 import CardBack from './components/CardBack.jsx';
@@ -9,8 +10,13 @@ import { currentPageState } from './states/currentPage.js';
 import { isLoadedState } from './states/isLoaded.js';
 import { isExerciseFinishedState} from './states/isExerciseFinished.js';
 import { currentCardState } from './states/currentCard.js';
+import { settings } from "./states/settings.js";
+
+import uitxt from './uitxt.json'
 
 function ExercisePage(props) {
+  const uiLang = settings((state) => state.uiLang)
+
   const wordsToDo = wordsToDoState((state) => state.wordsToDo)
   const handleNokClick = wordsToDoState((state) => state.handleNokClick);
   const handleOkClick = wordsToDoState((state) => state.handleOkClick);
@@ -91,6 +97,9 @@ function ExercisePage(props) {
     <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >
       <div className="flex flex-column">
         {cardDisplayer()}
+        <div className="flex align-items-center justify-content-center h-4rem border-round m-2">
+          <Button label={uitxt["13"][uiLang]} onClick={props.handleSummaryBackClick} />
+        </div>
       </div>
     </div>
   );

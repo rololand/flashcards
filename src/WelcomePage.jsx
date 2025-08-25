@@ -1,6 +1,7 @@
 import { Button } from "primereact/button";
 import { FloatLabel } from 'primereact/floatlabel';
 import { Dropdown } from 'primereact/dropdown';
+import { Divider } from 'primereact/divider';
 
 import { userState } from './states/user';
 import { settings } from "./states/settings.js";
@@ -49,9 +50,13 @@ function WelcomePage(props) {
 
   const buttonsExercises = () => {
     if (secondaryLanguage === 'de-DE')
-      return <div className="flex flex-wrap align-items-center justify-content-center ">
-          <div className="flex flex-column align-items-center justify-content-center h-4rem font-bold border-round gap-2" >
-            <Button label={uitxt["23"][uiLang]} onClick={() => {setCurrentPage('irregularVerbs')}} />
+      return <div className="w-full mt-8">
+          <Divider />
+          <div className="flex flex-wrap align-items-center justify-content-center ">
+            <div className="flex flex-column align-items-center justify-content-center font-bold border-round gap-2" >
+              <Button label={uitxt["23"][uiLang]} onClick={() => {setCurrentPage('irregularVerbs')}} />
+              <Button label={uitxt["26"][uiLang]} onClick={() => {setCurrentPage('conjunctions')}} />
+            </div>
           </div>
         </div>
   }

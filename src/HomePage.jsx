@@ -4,7 +4,8 @@ import dayjs from 'dayjs';
 import WelcomePage from "./WelcomePage";
 import ExercisePage from './ExercisePage.jsx';
 import SummaryPage from './SummaryPage';
-import IrregularVerbs from './IrregularVerbs.jsx'
+import IrregularVerbs from './exercises/IrregularVerbs.jsx'
+import Conjunctions from './exercises/Conjunctions.jsx';
 import LoadingPage from './LoadingPage';
 
 import { wordsToDoState } from './states/wordsToDo.js';
@@ -19,6 +20,7 @@ import { useEffect } from 'react';
 import { emptyWord } from './utils.js';
 
 import { fetchAndCacheAudio } from './fetchAndCacheAudio.js'
+
 
 
 function HomePage() {
@@ -129,11 +131,13 @@ function HomePage() {
           handleLearnClick={handleLearnClick}
         />
       if (currentPage === 'flashCard' || currentPage === 'wordGuessing')
-        return <ExercisePage getWords={getWords} />
+        return <ExercisePage getWords={getWords} handleSummaryBackClick={handleSummaryBackClick} />
       if (currentPage === 'exerciseSummary')
         return <SummaryPage handleSummaryBackClick={handleSummaryBackClick} />
       if (currentPage === 'irregularVerbs')
         return <IrregularVerbs handleSummaryBackClick={handleSummaryBackClick} />
+      if (currentPage === 'conjunctions')
+        return <Conjunctions handleSummaryBackClick={handleSummaryBackClick} />
     } else {
       return <LoadingPage />
     }

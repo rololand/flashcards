@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { useEventListener } from 'primereact/hooks';
 
 import { Button } from "primereact/button";
+import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
-import { settings } from "./states/settings.js";
+import { settings } from "../states/settings.js";
 
-import uitxt from './uitxt.json'
+import uitxt from '../uitxt.json'
 
 function IrregularVerbs(props) {
   const uiLang = settings((state) => state.uiLang)
@@ -13,7 +14,9 @@ function IrregularVerbs(props) {
   return (
     <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >
       <div className="flex flex-column">
-        {VerbTrainer()}
+        <Card className="p-m-4 p-shadow-4">
+          {VerbTrainer()}
+        </Card>
         <div className="flex align-items-center justify-content-center h-4rem border-round m-2">
           <Button label={uitxt["13"][uiLang]} onClick={props.handleSummaryBackClick} />
         </div>
@@ -110,10 +113,10 @@ const VerbTrainer = () => {
 
   return (
     <div className="p-m-4" style={{ maxWidth: '400px' }}>
-      <h3>{currentVerb.pl}: {currentVerb.de}</h3>
+      <h2><span className="text-purple-500">{currentVerb.pl}: </span>{currentVerb.de}</h2>
 
       <div className="p-field h-4rem">
-        <label>Präteritum:</label>
+        <label>Präteritum: </label>
         <InputText
           name="prateritum"
           ref={prateritumRef}
@@ -125,7 +128,7 @@ const VerbTrainer = () => {
       </div>
 
       <div className="p-field h-4rem">
-        <label>Partizip II:</label>
+        <label>Partizip II: </label>
         <InputText
           name="partizip"
           ref={partizipRef}
@@ -138,16 +141,16 @@ const VerbTrainer = () => {
 
       <div className="flex flex-column p-3 gap-2 mt-3">
         <Button
-          label={uitxt["24"][uiLang]}
-          icon="pi pi-refresh"
-          onClick={handleNextVerb}
-          className="p-mr-2"
-        />
-        <Button
           label={uitxt["25"][uiLang]}
           icon="pi pi-eye"
           onClick={showAnswer}
           className="p-button-secondary"
+        />
+        <Button
+          label={uitxt["24"][uiLang]}
+          icon="pi pi-refresh"
+          onClick={handleNextVerb}
+          className="p-mr-2"
         />
       </div>
     </div>
