@@ -1,5 +1,5 @@
 
-import './App.css';
+import './css/App.css';
 
 import { PrimeReactProvider } from 'primereact/api';
 
@@ -12,11 +12,13 @@ import 'primeicons/primeicons.css';
 import { Routes, Route } from "react-router-dom";
 import { useState, useRef, useEffect } from 'react';
 
-import WordsTable from './WordsTable';
-import AppMenu from './AppMenu';
-import HomePage from './HomePage';
-import LoggingPage from './LoggingPage';
-import LoadingPage from './LoadingPage';
+import WordsTable from './pages/WordsTable';
+import AppMenu from './components/AppMenu';
+import HomePage from './pages/HomePage';
+import AdminPage from './pages/AdminPage';
+import SettingsPage from './pages/SettingsPage';
+import LoggingPage from './pages/LoggingPage';
+import LoadingPage from './pages/LoadingPage';
 
 import TextToSpeechEngine from './components/TextToSpeechEngine';
 
@@ -70,6 +72,8 @@ function App() {
           <Routes>
             <Route index path={'/flashcards/'} element={<HomePage userName={userName} />} />
             <Route path={'/flashcards/library/'} element={<WordsTable />} />
+            <Route path={'/flashcards/admin/'} element={<AdminPage />} />
+            <Route path={'/flashcards/settings/'} element={<SettingsPage />} />
           </Routes>
         <TextToSpeechEngine />
         </PrimeReactProvider>

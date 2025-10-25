@@ -11,7 +11,7 @@ import { FilterMatchMode } from 'primereact/api';
 import { Toast } from 'primereact/toast';
 import 'primeicons/primeicons.css';
 
-import { userState } from './states/user';
+import { userState } from '../states/user';
 
 import { useEffect, useState, useRef } from 'react';
 

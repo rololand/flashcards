@@ -1,6 +1,6 @@
 import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
-import { useTTS } from './states/tts';
-import { settings } from './states/settings';
+import { useTTS } from '../states/tts';
+import { settings } from '../states/settings';
 
 export const fetchAndCacheAudio = async (text, lang = 'pl-PL') => {
   const { tokenRef, regionRef } = settings.getState();

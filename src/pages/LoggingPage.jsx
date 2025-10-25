@@ -7,8 +7,8 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
 
-import { userState } from './states/user';
-import { settings } from './states/settings';
+import { userState } from '../states/user';
+import { settings } from '../states/settings';
 
 function LoggingPage(props) {
   const setUserName = userState((state) => state.setUserName)

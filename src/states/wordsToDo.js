@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { create } from 'zustand'
-import { emptyWord, increaseRank, decreaseRank, getNewDate } from '../utils'
+import { emptyWord, increaseRank, decreaseRank, getNewDate } from '../utils/utils'
 import { userState } from './user'
 import { currentCardState } from './currentCard'
 import { currentPageState } from './currentPage'

@@ -1,25 +1,25 @@
 import axios from 'axios'
 import dayjs from 'dayjs';
 
-import WelcomePage from "./WelcomePage";
+import WelcomePage from "./WelcomePage.jsx";
 import ExercisePage from './ExercisePage.jsx';
-import SummaryPage from './SummaryPage';
-import IrregularVerbs from './exercises/IrregularVerbs.jsx'
-import Conjunctions from './exercises/Conjunctions.jsx';
-import LoadingPage from './LoadingPage';
+import SummaryPage from './SummaryPage.jsx';
+import IrregularVerbs from '../exercises/IrregularVerbs.jsx'
+import Conjunctions from '../exercises/Conjunctions.jsx';
+import LoadingPage from './LoadingPage.jsx';
 
-import { wordsToDoState } from './states/wordsToDo.js';
-import { currentPageState } from './states/currentPage.js';
-import { isLoadedState } from './states/isLoaded.js';
-import { isExerciseFinishedState} from './states/isExerciseFinished.js'
-import { userState } from './states/user';
-import { currentCardState } from './states/currentCard.js';
-import { settings } from './states/settings.js';
+import { wordsToDoState } from '../states/wordsToDo.js';
+import { currentPageState } from '../states/currentPage.js';
+import { isLoadedState } from '../states/isLoaded.js';
+import { isExerciseFinishedState} from '../states/isExerciseFinished.js'
+import { userState } from '../states/user.js';
+import { currentCardState } from '../states/currentCard.js';
+import { settings } from '../states/settings.js';
 
 import { useEffect } from 'react';
-import { emptyWord } from './utils.js';
+import { emptyWord } from '../utils/utils.js';
 
-import { fetchAndCacheAudio } from './fetchAndCacheAudio.js'
+import { fetchAndCacheAudio } from '../utils/fetchAndCacheAudio.js'
 
 
 

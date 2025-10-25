@@ -1,4 +1,4 @@
-import { useTTS } from './states/tts';
+import { useTTS } from '../states/tts';
 
 export const playAudioFromCache = async (text, lang = 'pl-PL') => {
   const { getAudioFromCache } = useTTS.getState();

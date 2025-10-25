@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useTTS } from '../states/tts';
 
-import { getColouredTitleCard } from '../utils.js'
+import { getColouredTitleCard } from '../utils/utils.js'
 
 import { Card } from "primereact/card";
 
@@ -12,7 +12,7 @@ import CardFooter from './CardFooter.jsx';
 import { currentCardState } from '../states/currentCard';
 import { settings } from '../states/settings';
 
-import { playAudioFromCache } from '../playAudioFromCache.js'
+import { playAudioFromCache } from '../utils/playAudioFromCache.js'
 
 
 function CardBackFlashCard() {

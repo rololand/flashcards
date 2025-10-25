@@ -2,17 +2,17 @@ import { useEventListener } from 'primereact/hooks';
 import { useEffect } from 'react';
 import { Button } from 'primereact/button';
 
-import CardFront from './components/CardFront.jsx';
-import CardBack from './components/CardBack.jsx';
+import CardFront from '../components/CardFront.jsx';
+import CardBack from '../components/CardBack.jsx';
 
-import { wordsToDoState } from './states/wordsToDo.js';
-import { currentPageState } from './states/currentPage.js';
-import { isLoadedState } from './states/isLoaded.js';
-import { isExerciseFinishedState} from './states/isExerciseFinished.js';
-import { currentCardState } from './states/currentCard.js';
-import { settings } from "./states/settings.js";
+import { wordsToDoState } from '../states/wordsToDo.js';
+import { currentPageState } from '../states/currentPage.js';
+import { isLoadedState } from '../states/isLoaded.js';
+import { isExerciseFinishedState} from '../states/isExerciseFinished.js';
+import { currentCardState } from '../states/currentCard.js';
+import { settings } from "../states/settings.js";
 
-import uitxt from './uitxt.json'
+import uitxt from '../uitxt.json'
 
 function ExercisePage(props) {
   const uiLang = settings((state) => state.uiLang)

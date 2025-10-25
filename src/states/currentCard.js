@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { emptyWord } from '../utils'
+import { emptyWord } from '../utils/utils'
 
 export const currentCardState = create((set) => ({
   //do wykorzystania pozniej przy refactor logiki

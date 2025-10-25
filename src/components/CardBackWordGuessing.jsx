@@ -3,7 +3,7 @@ import { useEffect, Fragment } from 'react';
 
 import { useTTS } from '../states/tts';
 
-import { getColouredTitleCard, compareWords } from '../utils.js'
+import { getColouredTitleCard, compareWords } from '../utils/utils.js'
 
 import { Card } from "primereact/card";
 import { Button } from 'primereact/button';
@@ -14,7 +14,7 @@ import { currentCardState } from '../states/currentCard';
 import { settings } from '../states/settings';
 import { wordsToDoState } from '../states/wordsToDo.js';
 
-import { playAudioFromCache } from '../playAudioFromCache.js'
+import { playAudioFromCache } from '../utils/playAudioFromCache.js'
 
 import uitxt from '../uitxt.json'
 

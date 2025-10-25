@@ -3,13 +3,13 @@ import { FloatLabel } from 'primereact/floatlabel';
 import { Dropdown } from 'primereact/dropdown';
 import { Divider } from 'primereact/divider';
 
-import { userState } from './states/user';
-import { settings } from "./states/settings.js";
-import { wordsToDoState } from './states/wordsToDo.js';
-import { currentPageState } from "./states/currentPage.js";
-import { isLoadedState } from './states/isLoaded.js';
+import { userState } from '../states/user.js';
+import { settings } from "../states/settings.js";
+import { wordsToDoState } from '../states/wordsToDo.js';
+import { currentPageState } from "../states/currentPage.js";
+import { isLoadedState } from '../states/isLoaded.js';
 
-import uitxt from './uitxt.json'
+import uitxt from '../uitxt.json'
 
 function WelcomePage(props) {
   const userName = userState((state) => state.userName)

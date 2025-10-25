@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useTTS } from '../states/tts';
 import { useFormik } from 'formik';
 
-import { getColouredTitleCard } from '../utils.js'
+import { getColouredTitleCard } from '../utils/utils.js'
 
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
@@ -15,7 +15,7 @@ import CardHeader from './CardHeader.jsx'
 import { currentCardState } from '../states/currentCard.js';
 import { settings } from '../states/settings.js';
 
-import { playAudioFromCache } from '../playAudioFromCache.js'
+import { playAudioFromCache } from '../utils/playAudioFromCache.js'
 
 import uitxt from '../uitxt.json'
 
