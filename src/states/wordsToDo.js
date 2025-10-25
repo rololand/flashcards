@@ -67,6 +67,7 @@ export const wordsToDoState = create((set, get) => ({
     const setWordsToDo = get().setWordsToDo;
     const userName = userState.getState().userName;
     const lang = settings.getState().secondaryLanguage;
+    const maxRepetitionDays = settings.getState().maxRepetitionDays;
     const setCurrentCard = currentCardState.getState().setCurrentCard
     const setCurrentPage = currentPageState.getState().setCurrentPage
     const clearTTS = useTTS.getState().clearQueue
@@ -90,16 +91,16 @@ export const wordsToDoState = create((set, get) => ({
 
     //update proper rank
     if (lang === 'de-DE') {
-      newCurrentCard.date_de = getNewDate(rank)
+      newCurrentCard.date_de = getNewDate(rank, maxRepetitionDays[lang])
       newCurrentCard.rank_de = increaseRank(rank)
     } else if (lang === 'en-GB') {
-      newCurrentCard.date_en = getNewDate(rank)
+      newCurrentCard.date_en = getNewDate(rank, maxRepetitionDays[lang])
       newCurrentCard.rank_en = increaseRank(rank)
     } else if (lang === 'es-ES') {
-      newCurrentCard.date_es = getNewDate(rank)
+      newCurrentCard.date_es = getNewDate(rank, maxRepetitionDays[lang])
       newCurrentCard.rank_es = increaseRank(rank)
     } else if (lang === 'it-IT') {
-      newCurrentCard.date_it = getNewDate(rank)
+      newCurrentCard.date_it = getNewDate(rank, maxRepetitionDays[lang])
       newCurrentCard.rank_it = increaseRank(rank)
     }
 

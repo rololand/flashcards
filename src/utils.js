@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { settings } from './states/settings';
 
  export const emptyWord = {
     "id": '',
@@ -29,7 +30,7 @@ import dayjs from 'dayjs';
     "date_es": '',
 }
 
-export const getNewDate = (rank) => {
+export const getNewDate = (rank, maxRepetitionDays) => {
     const today = dayjs()
     let newDay;
 
@@ -54,7 +55,7 @@ export const getNewDate = (rank) => {
     } else if (rank === 9) {
         newDay = today.add(60, 'day')
     } else if (rank === 10) {
-        newDay = today.add(90, 'day')
+        newDay = today.add(maxRepetitionDays, 'day')
     }
     return newDay.format('YYYY-MM-DD').toString()
 }
@@ -100,7 +101,12 @@ export const compareWords = (guess, word, hint) => {
     guess = replaceSpecialCharacters(guess)
     word = replaceSpecialCharacters(word)
 
-    let words = hint.split(",").map(word => replaceSpecialCharacters(word.trim()));
+    let words = []
+
+    if (hint) {
+        words = hint.split(",").map(word => replaceSpecialCharacters(word.trim()));
+    }
+        
     words.push(word)
     // console.log('guess: ', guess)
     // console.log('word: ', word)

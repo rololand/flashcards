@@ -9,6 +9,14 @@ export const settings = create((set, get) => ({
       isMuted: flag,
     })),
   uiLang: "pl-PL",
+  setUiLang: (language) =>
+    set(() => {
+      // console.log('setting ui lang:', language);
+      return {
+        uiLang: language,
+      };
+    }),
+
   primaryLanguage: 'pl-PL',
   setPrimaryLanguage: (language) =>
     set(() => ({
@@ -24,10 +32,36 @@ export const settings = create((set, get) => ({
   numberOfNewWords: {
     "pl-PL": 10,
     "de-DE": 10,
-    "en-GB": 30,
-    "it-IT": 3,
+    "en-GB": 10,
+    "it-IT": 10,
     "es-ES": 10
   },
+  setNumberOfNewWords: (value) =>
+    set(() => ({
+      numberOfNewWords: value,
+    })),
+  
+  maxRepetitionDays: {
+    "pl-PL": 90,
+    "de-DE": 90,
+    "en-GB": 90,
+    "it-IT": 90,
+    "es-ES": 90
+  },
+  setMaxRepetitionDays: (value) =>
+    set(() => ({
+      maxRepetitionDays: value,
+    })),
+
+  checkArticle: {
+    "de-DE": 1,
+    "it-IT": 1,
+    "es-ES": 1
+  },
+  setCheckArticle: (value) =>
+    set(() => ({
+      checkArticle: value,
+    })),
   
   lang_1: '',
   lang_2: '',

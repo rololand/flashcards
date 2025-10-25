@@ -13,6 +13,9 @@ import { settings } from './states/settings';
 function LoggingPage(props) {
   const setUserName = userState((state) => state.setUserName)
   const setIsLogged = userState((state) => state.setIsLogged)
+  const setIsAdmin = userState((state) => state.setIsAdmin)
+  const setIsActive = userState((state) => state.setIsActive)
+  const setIsEditor = userState((state) => state.setIsEditor)
 
   const setIsMuted = settings((state) => state.setIsMuted)
   const setLang_1 = settings((state) => state.setLang_1)
@@ -20,6 +23,50 @@ function LoggingPage(props) {
   const setLang_3 = settings((state) => state.setLang_3)
   const setLang_4 = settings((state) => state.setLang_4)
   const setLang_5 = settings((state) => state.setLang_5)
+  const setUiLang = settings((state) => state.setUiLang)
+  const setNumberOfNewWords = settings((state) => state.setNumberOfNewWords)
+  const setMaxRepetitionDays = settings((state) => state.setMaxRepetitionDays)
+  const setCheckArticle = settings((state) => state.setCheckArticle)
+
+  const setUserVariables = (data) => {    
+    // console.log(data)
+    setUserName(data['name']);
+    setIsLogged(true);
+    setIsMuted(data['isMuted'])
+    setIsAdmin(data['isAdmin'])
+    setIsActive(data['isActive'])
+    setIsEditor(data['isEditor'])
+    setLang_1(data['lang_1'])
+    setLang_2(data['lang_2'])
+    setLang_3(data['lang_3'])
+    setLang_4(data['lang_4'])
+    setLang_5(data['lang_5'])
+    setUiLang(data['lang_ui'])
+
+    const numberOfNewWords = {
+      "pl-PL": data['numberOfNewWords_pl'],
+      "de-DE": data['numberOfNewWords_de'],
+      "en-GB": data['numberOfNewWords_en'],
+      "it-IT": data['numberOfNewWords_it'],
+      "es-ES": data['numberOfNewWords_es']
+    }
+    setNumberOfNewWords(numberOfNewWords)
+
+    const maxRepetitionDays = {
+      "pl-PL": data['maxRepetitionDays_pl'],
+      "de-DE": data['maxRepetitionDays_de'],
+      "en-GB": data['maxRepetitionDays_en'],
+      "it-IT": data['maxRepetitionDays_it'],
+      "es-ES": data['maxRepetitionDays_es']
+    }
+    setMaxRepetitionDays(maxRepetitionDays)
+    const checkArticle = {
+      "de-DE": 1,
+      "it-IT": 1,
+      "es-ES": 1
+    }
+    setCheckArticle(checkArticle)
+  }
 
   const handleLogin = async (data) => {
     props.setIsFormSent(true)
@@ -33,22 +80,7 @@ function LoggingPage(props) {
     try {
       console.log('First attempt');
       const res = await axios.post(azure_url, reqBody);
-      console.log(res.data)
-      const username = res.data['name'].charAt(0).toUpperCase() + res.data['name'].slice(1);
-      const isMuted = res.data['isMuted']
-      const lang_1 = res.data['lang_1']
-      const lang_2 = res.data['lang_2']
-      const lang_3 = res.data['lang_3']
-      const lang_4 = res.data['lang_4']
-      const lang_5 = res.data['lang_5']
-      setUserName(username);
-      setIsLogged(true);
-      setIsMuted(isMuted)
-      setLang_1(lang_1)
-      setLang_2(lang_2)
-      setLang_3(lang_3)
-      setLang_4(lang_4)
-      setLang_5(lang_5)
+      setUserVariables(res.data)
       props.setLoginErrMsg('');
       return
     } catch (err) {
@@ -60,21 +92,7 @@ function LoggingPage(props) {
     try {
       console.log('Second attempt');
       const res = await axios.post(azure_url, reqBody);
-      const username = res.data['name'].charAt(0).toUpperCase() + res.data['name'].slice(1);
-      const isMuted = res.data['isMuted']
-      const lang_1 = res.data['lang_1']
-      const lang_2 = res.data['lang_2']
-      const lang_3 = res.data['lang_3']
-      const lang_4 = res.data['lang_4']
-      const lang_5 = res.data['lang_5']
-      setUserName(username);
-      setIsLogged(true);
-      setIsMuted(isMuted)
-      setLang_1(lang_1)
-      setLang_2(lang_2)
-      setLang_3(lang_3)
-      setLang_4(lang_4)
-      setLang_5(lang_5)
+      setUserVariables(res.data)
       props.setLoginErrMsg('');
     } catch (err2) {
       console.log('Second attempt failed:', err2);
@@ -83,60 +101,57 @@ function LoggingPage(props) {
     }
   };  
 
-    const formik = useFormik({
-      initialValues: {
-          name: '',
-          password: '',
-      },
-      validate: (data) => {
-          let errors = {};
+  const formik = useFormik({
+    initialValues: {
+        name: '',
+        password: '',
+    },
+    validate: (data) => {
+        let errors = {};
 
-          if (!data.name) {
-              errors.name = 'Name is required.';
-          }
+        if (!data.name) {
+            errors.name = 'Name is required.';
+        }
 
-          if (!data.password) {
-              errors.password = 'Password is required.';
-          }
+        if (!data.password) {
+            errors.password = 'Password is required.';
+        }
 
-          return errors;
-      },
-      onSubmit: handleLogin
-    });
+        return errors;
+    },
+    onSubmit: handleLogin
+  });
 
-    const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
-    const getFormErrorMessage = (name) => {
-        return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
-    };
+  const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
+  const getFormErrorMessage = (name) => {
+      return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
+  };
 
-    return (
-      <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >
-          <form onSubmit={formik.handleSubmit} className="p-fluid">
-            <div className="field">
-                <span className="p-float-label">
-                    <InputText id="name" name="name" value={formik.values.name} onChange={formik.handleChange} autoFocus
-                      className={classNames({ 'p-invalid': isFormFieldValid('name') })} autoComplete="off" />
-                    <label htmlFor="name" className={classNames({ 'p-error': isFormFieldValid('name') })}>Name*</label>
-                </span>
-                {getFormErrorMessage('name')}
-            </div>
-            <div className="field">
-                <span className="p-float-label">
-                    <Password id="password" name="password" value={formik.values.password} onChange={formik.handleChange} toggleMask
-                        className={classNames({ 'p-invalid': isFormFieldValid('password') })} feedback={false} />
-                    <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid('password') })}>Password*</label>
-                </span>
-                {getFormErrorMessage('password')}
-            </div>
-
-            <Button type="submit" label="login" className="mt-2" />
-            <p>{props.loginErrMsg}</p>
-        </form>
-
-      </div>
+  return (
+    <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >
+      <form onSubmit={formik.handleSubmit} className="p-fluid">
+        <div className="field">
+          <span className="p-float-label">
+            <InputText id="name" name="name" value={formik.values.name} onChange={formik.handleChange} autoFocus
+              className={classNames({ 'p-invalid': isFormFieldValid('name') })} autoComplete="off" />
+            <label htmlFor="name" className={classNames({ 'p-error': isFormFieldValid('name') })}>Login*</label>
+          </span>
+          {getFormErrorMessage('name')}
+        </div>
+        <div className="field">
+          <span className="p-float-label">
+            <Password id="password" name="password" value={formik.values.password} onChange={formik.handleChange} toggleMask
+              className={classNames({ 'p-invalid': isFormFieldValid('password') })} feedback={false} />
+            <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid('password') })}>Password*</label>
+          </span>
+          {getFormErrorMessage('password')}
+        </div>
+        <Button type="submit" label="login" className="mt-2" />
+        <p>{props.loginErrMsg}</p>
+      </form>
+    </div>
+  );
+}
   
-    );
-  }
-  
-  export default LoggingPage;
+export default LoggingPage;
   

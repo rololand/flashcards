@@ -169,10 +169,9 @@ function WordsTable() {
       </div>
   );
   if (isLoaded) {
-    //remove first={40} zeby ladowalo sie od pierwszej strony
     return (
       <PrimeReactProvider>
-        <DataTable value={words.filter(emptyFilter)} dataKey="id" editMode='row' onRowEditComplete={editCard} filters={filters} filterDisplay="menu" header={header} emptyMessage="Loading..." paginator first={40} rows={10} rowsPerPageOptions={[10, 20, 50, 100]} tableStyle={{ minWidth: '50rem' }}>
+        <DataTable value={words.filter(emptyFilter)} dataKey="id" editMode='row' onRowEditComplete={editCard} filters={filters} filterDisplay="menu" header={header} emptyMessage="Loading..." paginator rows={10} rowsPerPageOptions={[10, 20, 50, 100]} tableStyle={{ minWidth: '50rem' }}>
           <Column rowEditor={true} headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
           <Column field="id" header="id"  style={{ width: '2%' }} sortable></Column>
           <Column field="pl" header="pl" editor={(options) => textEditor(options)} style={{ width: '9%' }}></Column>
