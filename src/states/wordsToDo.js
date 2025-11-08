@@ -9,14 +9,20 @@ import { useTTS } from './tts';
 
 export const wordsToDoState = create((set, get) => ({
   wordsToDo: [emptyWord],
-  wordsToDoCount: 0,
+  totalWordsToDoCount: 0,
 
   setWordsToDo: (newWordsToDo) =>
     set(() => {
       // console.log('New wordsToDo')
       return {
         wordsToDo: newWordsToDo,
-        wordsToDoCount: newWordsToDo.length,
+      }
+    }),
+  setTotalWordsToDoCount: (count) =>
+    set(() => {
+      // console.log('New wordsToDo')
+      return {
+        totalWordsToDoCount: count,
       }
     }),
   

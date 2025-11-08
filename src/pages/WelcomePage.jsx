@@ -19,7 +19,7 @@ function WelcomePage(props) {
   const uiLang = settings((state) => state.uiLang)
   const secondaryLanguage = settings((state) => state.secondaryLanguage)
   const setSecondaryLanguage = settings((state) => state.setSecondaryLanguage)
-  const learn_langs = settings((state) => state.learn_langs)
+  const learn_langs = settings((state) => state.learn_langs).filter(Boolean)
   const learn_langs_dropdown_list = learn_langs.map(lang => {
     const [langPart, countryPart] = lang.split("-");
       return {
@@ -31,7 +31,7 @@ function WelcomePage(props) {
     (option) => option.code === secondaryLanguage
   );
 
-  const wordsToDoCount = wordsToDoState((state) => state.wordsToDoCount)
+  const wordsToDoCount = wordsToDoState((state) => state.totalWordsToDoCount)
 
   const setCurrentPage = currentPageState((state) => state.setCurrentPage)
    

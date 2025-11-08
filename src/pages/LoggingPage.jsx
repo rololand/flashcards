@@ -27,6 +27,7 @@ function LoggingPage(props) {
   const setNumberOfNewWords = settings((state) => state.setNumberOfNewWords)
   const setMaxRepetitionDays = settings((state) => state.setMaxRepetitionDays)
   const setCheckArticle = settings((state) => state.setCheckArticle)
+  const setNumberOfWordsToRepeat = settings((state) => state.setNumberOfWordsToRepeat)
 
   const setUserVariables = (data) => {    
     // console.log(data)
@@ -61,11 +62,19 @@ function LoggingPage(props) {
     }
     setMaxRepetitionDays(maxRepetitionDays)
     const checkArticle = {
-      "de-DE": 1,
-      "it-IT": 1,
-      "es-ES": 1
+      "de-DE": data['checkArticle_de'],
+      "it-IT": data['checkArticle_it'],
+      "es-ES": data['checkArticle_es']
     }
     setCheckArticle(checkArticle)
+    const numberOfWordsToRepeat = {
+      "pl-PL": data['numberOfWordsToRepeat_pl'],
+      "de-DE": data['numberOfWordsToRepeat_de'],
+      "en-GB": data['numberOfWordsToRepeat_en'],
+      "it-IT": data['numberOfWordsToRepeat_it'],
+      "es-ES": data['numberOfWordsToRepeat_es']
+    }
+    setNumberOfWordsToRepeat(numberOfWordsToRepeat)
   }
 
   const handleLogin = async (data) => {
@@ -78,24 +87,24 @@ function LoggingPage(props) {
     };
   
     try {
-      console.log('First attempt');
+      // console.log('First attempt');
       const res = await axios.post(azure_url, reqBody);
       setUserVariables(res.data)
       props.setLoginErrMsg('');
       return
     } catch (err) {
-      console.log('First attempt failed, waiting 20 seconds...', err);
+      // console.log('First attempt failed, waiting 20 seconds...', err);
     }
 
     await new Promise(resolve => setTimeout(resolve, 20000));
   
     try {
-      console.log('Second attempt');
+      // console.log('Second attempt');
       const res = await axios.post(azure_url, reqBody);
       setUserVariables(res.data)
       props.setLoginErrMsg('');
     } catch (err2) {
-      console.log('Second attempt failed:', err2);
+      // console.log('Second attempt failed:', err2);
       props.setIsFormSent(false);
       props.setLoginErrMsg('Something went wrong, try again.');
     }

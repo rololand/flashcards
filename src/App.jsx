@@ -44,9 +44,9 @@ function App() {
       const { token, region } = await res.json();
       setTokenRef(token);
       setRegionRef(region);
-      console.log('[Azure TTS] Token refreshed');
+      // console.log('[Azure TTS] Token refreshed');
     } catch (err) {
-      console.error('[Azure TTS] Błąd pobierania tokena:', err);
+      // console.error('[Azure TTS] Błąd pobierania tokena:', err);
     }
   };
   

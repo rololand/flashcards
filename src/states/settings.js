@@ -52,11 +52,23 @@ export const settings = create((set, get) => ({
     set(() => ({
       maxRepetitionDays: value,
     })),
+  
+  numberOfWordsToRepeat: {
+    "pl-PL": 20,
+    "de-DE": 20,
+    "en-GB": 20,
+    "it-IT": 20,
+    "es-ES": 20
+  },
+  setNumberOfWordsToRepeat: (value) =>
+    set(() => ({
+      numberOfWordsToRepeat: value,
+    })),
 
   checkArticle: {
-    "de-DE": 1,
-    "it-IT": 1,
-    "es-ES": 1
+    "de-DE": true,
+    "it-IT": true,
+    "es-ES": true
   },
   setCheckArticle: (value) =>
     set(() => ({

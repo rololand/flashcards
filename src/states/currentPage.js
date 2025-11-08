@@ -5,7 +5,7 @@ export const currentPageState = create((set) => ({
 
   setCurrentPage: (newCurrentPage) =>
     set(() => {
-      // console.log('set currentPage: ' + newCurrentPage)
+      console.log('set currentPage: ' + newCurrentPage)
       return {
         currentPage: newCurrentPage,
       }

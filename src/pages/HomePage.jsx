@@ -25,6 +25,7 @@ import { fetchAndCacheAudio } from '../utils/fetchAndCacheAudio.js'
 
 function HomePage() {
   const setWordsToDo = wordsToDoState((state) => state.setWordsToDo)
+  const setTotalWordsToDoCount = wordsToDoState((state) => state.setTotalWordsToDoCount)
 
   const currentPage = currentPageState((state) => state.currentPage)
   const setCurrentPage = currentPageState((state) => state.setCurrentPage)
@@ -41,6 +42,7 @@ function HomePage() {
 
   const lang = settings((state) => state.secondaryLanguage)
   const numberOfNewWords = settings((state) => state.numberOfNewWords)
+  const numberOfWordsToRepeat = settings((state) => state.numberOfWordsToRepeat)
   
   const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -70,14 +72,18 @@ function HomePage() {
     axios.post(azure_url, req_body)
       .then(res => {
         let unshuffled = res.data
-        let shuffled = unshuffled
-          //map to get random sort value for every element in array
-          .map(value => ({ value, sort: Math.random() }))
-          //sort base on created sort value
-          .sort((a, b) => a.sort - b.sort)
-          //unmap to get array
-          .map(({ value }) => value)
+        setTotalWordsToDoCount(unshuffled.length)
+        // let shuffled = unshuffled
+        //   //map to get random sort value for every element in array
+        //   .map(value => ({ value, sort: Math.random() }))
+        //   //sort base on created sort value
+        //   .sort((a, b) => a.sort - b.sort)
+        //   //unmap to get array
+        //   .map(({ value }) => value)
+        const count = numberOfWordsToRepeat[lang]
+        const shuffled = unshuffled.sort(() => Math.random() - 0.5).slice(0, count);
         setWordsToDo(shuffled)
+        
 
         //cachowanie slow
         doCaching(shuffled)
