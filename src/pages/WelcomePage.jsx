@@ -33,16 +33,16 @@ function WelcomePage(props) {
 
   const wordsToDoCount = wordsToDoState((state) => state.totalWordsToDoCount)
 
-  const setCurrentPage = currentPageState((state) => state.setCurrentPage)
+  const setCurrentExercisePage = currentPageState((state) => state.setCurrentExercisePage)
    
   const buttons = () => {
     if (wordsToDoCount > 0)
       return <div className="flex flex-wrap align-items-center justify-content-center ">
           <div className="flex align-items-center justify-content-center h-4rem font-bold border-round m-2">
-            <Button label={uitxt["7"][uiLang]} onClick={() => {setCurrentPage('flashCard')}} />
+            <Button label={uitxt["7"][uiLang]} onClick={() => {setCurrentExercisePage('flashCard')}} />
           </div>
           <div className="flex align-items-center justify-content-center h-4rem font-bold border-round m-2">
-            <Button label={uitxt["6"][uiLang]} onClick={() => {setCurrentPage('wordGuessing')}} />
+            <Button label={uitxt["6"][uiLang]} onClick={() => {setCurrentExercisePage('wordGuessing')}} />
           </div>
         </div>
     return <Button label={uitxt["5"][uiLang]} onClick={props.handleLearnClick} />
@@ -54,8 +54,8 @@ function WelcomePage(props) {
           <Divider />
           <div className="flex flex-wrap align-items-center justify-content-center ">
             <div className="flex flex-column align-items-center justify-content-center font-bold border-round gap-2" >
-              <Button label={uitxt["23"][uiLang]} onClick={() => {setCurrentPage('irregularVerbs')}} />
-              <Button label={uitxt["26"][uiLang]} onClick={() => {setCurrentPage('conjunctions')}} />
+              <Button label={uitxt["23"][uiLang]} onClick={() => {setCurrentExercisePage('irregularVerbs')}} />
+              <Button label={uitxt["26"][uiLang]} onClick={() => {setCurrentExercisePage('conjunctions')}} />
             </div>
           </div>
         </div>

@@ -29,6 +29,8 @@ function HomePage() {
 
   const currentPage = currentPageState((state) => state.currentPage)
   const setCurrentPage = currentPageState((state) => state.setCurrentPage)
+  const currentExercisePage = currentPageState((state) => state.currentExercisePage)
+  const setCurrentExercisePage = currentPageState((state) => state.setCurrentExercisePage)
 
   const isLoaded = isLoadedState((state) => state.isLoaded)
   const setIsLoaded = isLoadedState((state) => state.setIsLoaded)
@@ -62,6 +64,7 @@ function HomePage() {
 
   const getWords = async () => {
     // console.log("get words")
+    setIsLoaded(false);
     const today = dayjs()
     const azure_url = "https://flashcardsfunction.azurewebsites.net/api/getWordsOnDate/"
     const req_body = {
@@ -96,15 +99,17 @@ function HomePage() {
 
   useEffect(() => {
     setCurrentCard(emptyWord)
+    setWordsToDo([emptyWord])
     getWords();
-  }, [userName, lang]);
+  }, [userName, lang, currentPage]);
 
   const handleSummaryBackClick = () => {
     // console.log('back click')
+    setCurrentCard(emptyWord)
     setIsExerciseFinished(true)
     setIsLoaded(false)
     getWords();
-    setCurrentPage('homePage')
+    setCurrentExercisePage('welcomePage')
   }
 
   const handleLearnClick = () => {
@@ -123,7 +128,7 @@ function HomePage() {
         //cachowanie slow
         doCaching(res.data)
         setIsExerciseFinished(false)
-        setCurrentPage('flashCard')
+        setCurrentExercisePage('flashCard')
       })
       .catch(err => {
         console.log('Error: ' + err);
@@ -132,17 +137,17 @@ function HomePage() {
 
   const homePagePageSelector = () => {
     if (isLoaded) {
-      if (currentPage === 'homePage' || currentPage == null)
+      if (currentExercisePage === 'welcomePage' || currentExercisePage == null)
         return <WelcomePage 
           handleLearnClick={handleLearnClick}
         />
-      if (currentPage === 'flashCard' || currentPage === 'wordGuessing')
+      if (currentExercisePage === 'flashCard' || currentExercisePage === 'wordGuessing')
         return <ExercisePage getWords={getWords} handleSummaryBackClick={handleSummaryBackClick} />
-      if (currentPage === 'exerciseSummary')
+      if (currentExercisePage === 'exerciseSummary')
         return <SummaryPage handleSummaryBackClick={handleSummaryBackClick} />
-      if (currentPage === 'irregularVerbs')
+      if (currentExercisePage === 'irregularVerbs')
         return <IrregularVerbs handleSummaryBackClick={handleSummaryBackClick} />
-      if (currentPage === 'conjunctions')
+      if (currentExercisePage === 'conjunctions')
         return <Conjunctions handleSummaryBackClick={handleSummaryBackClick} />
     } else {
       return <LoadingPage />

@@ -9,7 +9,6 @@ import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
 
-import { Routes, Route } from "react-router-dom";
 import { useState, useRef, useEffect } from 'react';
 
 import WordsTable from './pages/WordsTable';
@@ -24,6 +23,7 @@ import TextToSpeechEngine from './components/TextToSpeechEngine';
 
 import { userState } from './states/user';
 import { settings } from './states/settings';
+import { currentPageState } from "./states/currentPage.js";
 
 
 function App() {
@@ -36,6 +36,8 @@ function App() {
   const setTokenRef = settings((state) => state.setTokenRef)
   const setRegionRef = settings((state) => state.setRegionRef)
   const tokenRefreshInterval = useRef(null);
+
+  const currentPage = currentPageState((state) => state.currentPage)
 
   // Pobieranie tokena
   const fetchToken = async () => {
@@ -69,12 +71,10 @@ function App() {
       return (
         <PrimeReactProvider value={{ unstyled: false }}>
         <AppMenu />
-          <Routes>
-            <Route index path={'/flashcards/'} element={<HomePage userName={userName} />} />
-            <Route path={'/flashcards/library/'} element={<WordsTable />} />
-            <Route path={'/flashcards/admin/'} element={<AdminPage />} />
-            <Route path={'/flashcards/settings/'} element={<SettingsPage />} />
-          </Routes>
+            {currentPage == 'homePage' && <HomePage />}
+            {currentPage == 'library' && <WordsTable />}
+            {currentPage == 'admin' && <AdminPage />}
+            {currentPage == 'settings' && <SettingsPage />}
         <TextToSpeechEngine />
         </PrimeReactProvider>
       )

@@ -4,13 +4,13 @@ import CardFrontWordGuessing from './CardFrontWordGuessing.jsx';
 import { currentPageState } from '../states/currentPage.js';
 
 function CardFront() {
-  const currentPage = currentPageState((state) => state.currentPage)
+  const currentExercisePage = currentPageState((state) => state.currentExercisePage)
 
   const frontCardDisplayer = () => {
-    if (currentPage === 'flashCard') {
+    if (currentExercisePage === 'flashCard') {
         return <CardFrontFlashCard />
     }
-    if (currentPage === 'wordGuessing') {
+    if (currentExercisePage === 'wordGuessing') {
         return <CardFrontWordGuessing />
     }
   }

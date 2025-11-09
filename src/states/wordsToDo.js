@@ -75,7 +75,7 @@ export const wordsToDoState = create((set, get) => ({
     const lang = settings.getState().secondaryLanguage;
     const maxRepetitionDays = settings.getState().maxRepetitionDays;
     const setCurrentCard = currentCardState.getState().setCurrentCard
-    const setCurrentPage = currentPageState.getState().setCurrentPage
+    const setCurrentExercisePage = currentPageState.getState().setCurrentExercisePage
     const clearTTS = useTTS.getState().clearQueue
     clearTTS()
 
@@ -122,7 +122,7 @@ export const wordsToDoState = create((set, get) => ({
     // update list and set done flag if needed
     if (newWordsToDo.length === 0) {
         setCurrentCard(emptyWord)
-        setCurrentPage('exerciseSummary')
+        setCurrentExercisePage('exerciseSummary')
     }
     setWordsToDo(newWordsToDo)
 

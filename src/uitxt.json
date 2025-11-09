@@ -77,7 +77,7 @@
         "es-ES": "Excellent"
     },
     "12": {
-        "pl-PL": "Skończyłeś ćwiczenie",
+        "pl-PL": "Ćwiczenie zakończone!",
         "en-GB": "You have finished exercise!",
         "de-DE": "You have finished exercise!",
         "it-IT": "You have finished exercise!",
@@ -231,41 +231,118 @@
         "es-ES": "Settings"
     },
     "34": {
-        "pl-PL": "",
-        "en-GB": "",
-        "de-DE": "",
-        "it-IT": "",
-        "es-ES": ""
+        "pl-PL": "Często",
+        "en-GB": "Frequent",
+        "de-DE": "Frequent",
+        "it-IT": "Frequent",
+        "es-ES": "Frequent"
     },
     "35": {
-        "pl-PL": "",
-        "en-GB": "",
-        "de-DE": "",
-        "it-IT": "",
-        "es-ES": ""
+        "pl-PL": "Normalnie",
+        "en-GB": "Normal",
+        "de-DE": "Normal",
+        "it-IT": "Normal",
+        "es-ES": "Normal"
     },
     "36": {
-        "pl-PL": "",
-        "en-GB": "",
-        "de-DE": "",
-        "it-IT": "",
-        "es-ES": ""
+        "pl-PL": "Rzadko",
+        "en-GB": "Rare",
+        "de-DE": "Rare",
+        "it-IT": "Rare",
+        "es-ES": "Rare"
     },
     "37": {
-        "pl-PL": "",
-        "en-GB": "",
-        "de-DE": "",
-        "it-IT": "",
-        "es-ES": ""
+        "pl-PL": "Bardzo rzadko",
+        "en-GB": "Super rare",
+        "de-DE": "Super rare",
+        "it-IT": "Super rare",
+        "es-ES": "Super rare"
     },
     "38": {
-        "pl-PL": "",
-        "en-GB": "",
-        "de-DE": "",
-        "it-IT": "",
-        "es-ES": ""
+        "pl-PL": "Nie wybrano",
+        "en-GB": "Not selected",
+        "de-DE": "Not selected",
+        "it-IT": "Not selected",
+        "es-ES": "Not selected"
     },
     "39": {
+        "pl-PL": "Ogólne",
+        "en-GB": "General",
+        "de-DE": "General",
+        "it-IT": "General",
+        "es-ES": "General"
+    },
+    "40": {
+        "pl-PL": "Język tłumaczeń",
+        "en-GB": "Translation language",
+        "de-DE": "Translation language",
+        "it-IT": "Translation language",
+        "es-ES": "Translation language"
+    },
+    "41": {
+        "pl-PL": "Pierwszy język do nauki",
+        "en-GB": "First language to learn",
+        "de-DE": "First language to learn",
+        "it-IT": "First language to learn",
+        "es-ES": "First language to learn"
+    },
+    "42": {
+        "pl-PL": "Drugi język do nauki",
+        "en-GB": "Second language to learn",
+        "de-DE": "Second language to learn",
+        "it-IT": "Second language to learn",
+        "es-ES": "Second language to learn"
+    },
+    "43": {
+        "pl-PL": "Trzeci język do nauki",
+        "en-GB": "Third language to learn",
+        "de-DE": "Third language to learn",
+        "it-IT": "Third language to learn",
+        "es-ES": "Third language to learn"
+    },
+    "44": {
+        "pl-PL": "Czwarty język do nauki",
+        "en-GB": "Fourth language to learn",
+        "de-DE": "Fourth language to learn",
+        "it-IT": "Fourth language to learn",
+        "es-ES": "Fourth language to learn"
+    },
+    "45": {
+        "pl-PL": "Język aplikacji",
+        "en-GB": "UI language",
+        "de-DE": "UI language",
+        "it-IT": "UI language",
+        "es-ES": "UI language"
+    },
+    "46": {
+        "pl-PL": "Liczba słówek w powtórce",
+        "en-GB": "Number of words in repetition exercise",
+        "de-DE": "Number of words in repetition exercise",
+        "it-IT": "Number of words in repetition exercise",
+        "es-ES": "Number of words in repetition exercise"
+    },
+    "47": {
+        "pl-PL": "Liczba słówek w nowej lekcji",
+        "en-GB": "Number of words in new exercise",
+        "de-DE": "Number of words in new exercise",
+        "it-IT": "Number of words in new exercise",
+        "es-ES": "Number of words in new exercise"
+    },
+    "48": {
+        "pl-PL": "Częstotliwość powtórek",
+        "en-GB": "Repetition frequency",
+        "de-DE": "Repetition frequency",
+        "it-IT": "Repetition frequency",
+        "es-ES": "Repetition frequency"
+    },
+    "49": {
+        "pl-PL": "Sprawdzaj rodzajniki",
+        "en-GB": "Check articles",
+        "de-DE": "Check articles",
+        "it-IT": "Check articles",
+        "es-ES": "Check articles"
+    },
+    "50": {
         "pl-PL": "",
         "en-GB": "",
         "de-DE": "",

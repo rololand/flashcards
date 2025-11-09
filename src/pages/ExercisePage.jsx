@@ -12,6 +12,8 @@ import { isExerciseFinishedState} from '../states/isExerciseFinished.js';
 import { currentCardState } from '../states/currentCard.js';
 import { settings } from "../states/settings.js";
 
+import { emptyWord } from '../utils/utils.js';
+
 import uitxt from '../uitxt.json'
 
 function ExercisePage(props) {
@@ -21,7 +23,7 @@ function ExercisePage(props) {
   const handleNokClick = wordsToDoState((state) => state.handleNokClick);
   const handleOkClick = wordsToDoState((state) => state.handleOkClick);
   
-  const setCurrentPage = currentPageState((state) => state.setCurrentPage)
+  const setCurrentExercisePage = currentPageState((state) => state.setCurrentExercisePage)
   const setIsLoaded = isLoadedState((state) => state.setIsLoaded)
   const setIsExerciseFinished = isExerciseFinishedState((state) => state.setIsExerciseFinished)
   
@@ -42,7 +44,8 @@ function ExercisePage(props) {
       setIsLoaded(false)
       setIsCardFlipped(false)
       setIsCurrentFront(true)
-      setCurrentPage('homePage')
+      setCurrentCard(emptyWord)
+      setCurrentExercisePage('welcomePage')
       props.getWords();
     } else if (e.code === 'ArrowUp') {
       setIsCardFlipped(true)

@@ -4,10 +4,10 @@ import { currentPageState } from '../states/currentPage.js';
 
 function CardFooter() {
 
-  const currentPage = currentPageState((state) => state.currentPage)
+  const currentExercisePage = currentPageState((state) => state.currentExercisePage)
 
   const cardFooterDisplayer = () => {
-    if (currentPage === 'flashCard') {
+    if (currentExercisePage === 'flashCard') {
       return <CardFooterFlashCard />
     }
   }

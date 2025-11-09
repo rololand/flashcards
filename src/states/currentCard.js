@@ -30,7 +30,7 @@ export const currentCardState = create((set) => ({
   currentCard: emptyWord,
   setCurrentCard: (newCurrentCard) =>
     set(() => {
-      // console.log('setting current card');
+      // console.log('setting current card: ', newCurrentCard);
       return {
         currentCard: newCurrentCard,
         word: {

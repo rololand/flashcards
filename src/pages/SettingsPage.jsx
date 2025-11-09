@@ -60,10 +60,10 @@ function SettingsPage(props) {
     value: n,
   }));
   const maxRepetitionDaysOptions = [
-    { label: "Często", value: 60 },
-    { label: "Normalnie", value: 90 },
-    { label: "Rzadko", value: 150 },
-    { label: "Bardzo rzadko", value: 300 },
+    { label: uitxt["34"][uiLang], value: 60 },
+    { label: uitxt["35"][uiLang], value: 90 },
+    { label: uitxt["36"][uiLang], value: 150 },
+    { label: uitxt["37"][uiLang], value: 300 },
   ];
   const uiLangOptions = [
     { label: "PL", value: 'pl-PL'},
@@ -75,7 +75,7 @@ function SettingsPage(props) {
     { label: "DE", value: 'de-DE'},
     { label: "IT", value: 'it-IT'},
     { label: "ES", value: 'es-ES'},
-    { label: "Nie wybrano", value: 'none'},
+    { label: uitxt["38"][uiLang], value: 'none'},
   ]
 
   const getAvailableLangOptions = (currentLangValue) => {
@@ -188,11 +188,11 @@ function SettingsPage(props) {
     <div className="flex flex-column">
       <form onSubmit={formik.handleSubmit} className="p-4 max-w-2xl mx-auto">
         <TabView>
-          <TabPanel key='general' header='Ogólne' >
+          <TabPanel key='general' header={uitxt["39"][uiLang]} >
             <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                 <label className="block font-medium mb-1">
-                  Język tłumaczeń
+                  {uitxt["40"][uiLang]}
                 </label>
               </div>
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -210,7 +210,7 @@ function SettingsPage(props) {
             <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                 <label className="block font-medium mb-1">
-                  Pierwszy język do nauki
+                  {uitxt["41"][uiLang]}
                 </label>
               </div>
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -228,7 +228,7 @@ function SettingsPage(props) {
             <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                 <label className="block font-medium mb-1">
-                  Drugi język do nauki
+                  {uitxt["42"][uiLang]}
                 </label>
               </div>
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -246,7 +246,7 @@ function SettingsPage(props) {
             <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                 <label className="block font-medium mb-1">
-                  Trzeci język do nauki
+                  {uitxt["43"][uiLang]}
                 </label>
               </div>
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -264,7 +264,7 @@ function SettingsPage(props) {
             <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                 <label className="block font-medium mb-1">
-                  Czwarty język do nauki
+                  {uitxt["44"][uiLang]}
                 </label>
               </div>
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -282,7 +282,7 @@ function SettingsPage(props) {
             <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                 <label className="block font-medium mb-1">
-                  Język aplikacji
+                  {uitxt["45"][uiLang]}
                 </label>
               </div>
               <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -317,7 +317,7 @@ function SettingsPage(props) {
               <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
                 <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                   <label className="block font-medium mb-1">
-                    Liczba słówek w lekcji
+                    {uitxt["46"][uiLang]}
                   </label>
                 </div>
                 <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -337,7 +337,7 @@ function SettingsPage(props) {
               <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
                 <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                   <label className="block font-medium mb-1">
-                    Liczba nowych słówek
+                    {uitxt["47"][uiLang]}
                   </label>
                 </div>
                 <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -357,7 +357,7 @@ function SettingsPage(props) {
               <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
                 <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                   <label className="block font-medium mb-1">
-                    Częstotliwość powtórek
+                    {uitxt["48"][uiLang]}
                   </label>
                 </div>
                 <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
@@ -378,7 +378,7 @@ function SettingsPage(props) {
                 <div className="flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
                   <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">
                     <label className="block font-medium mb-1">
-                      Sprawdzaj rodzajniki
+                      {uitxt["49"][uiLang]}
                     </label>
                   </div>
                   <div className="flex align-items-center justify-content-center h-4rem font-bold border-round p-2">

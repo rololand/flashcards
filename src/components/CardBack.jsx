@@ -4,13 +4,13 @@ import CardBackWordGuessing from './CardBackWordGuessing.jsx';
 import { currentPageState } from '../states/currentPage.js';
 
 function CardBack() {
-  const currentPage = currentPageState((state) => state.currentPage)
+  const currentExercisePage = currentPageState((state) => state.currentExercisePage)
 
   const frontCardDisplayer = () => {
-    if (currentPage === 'flashCard') {
+    if (currentExercisePage === 'flashCard') {
         return <CardBackFlashCard />
     }
-    if (currentPage === 'wordGuessing') {
+    if (currentExercisePage === 'wordGuessing') {
         return <CardBackWordGuessing />
     }
   }
