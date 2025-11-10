@@ -88,7 +88,7 @@ export const replaceSpecialCharacters = (word) => {
     return word
         .toLowerCase()
         .replaceAll("ñ", "n")  // hiszpański
-        .replaceAll('ß', 'ss')
+        .replaceAll('ß', 'ss')  // niemiecki
         .normalize("NFD")
         .replaceAll(/[\u0300-\u036f]/g, "");
 }
