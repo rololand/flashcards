@@ -87,12 +87,10 @@ export const getColouredTitleCard = (title) => {
 export const replaceSpecialCharacters = (word) => {
     return word
         .toLowerCase()
-        // .replaceAll('ä', 'a')
-        // .replaceAll('ö', 'o')
-        // .replaceAll('ü', 'u')
-        // .replaceAll('ß', 'ss')
+        .replaceAll("ñ", "n")  // hiszpański
+        .replaceAll('ß', 'ss')
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
+        .replaceAll(/[\u0300-\u036f]/g, "");
 }
 
 export const compareWords = (guess, word, hint) => {
@@ -109,9 +107,9 @@ export const compareWords = (guess, word, hint) => {
     }
         
     words.push(word)
-    // console.log('guess: ', guess)
+    console.log('guess: ', guess)
     // console.log('word: ', word)
-    // console.log('words: ', words)
+    console.log('words: ', words)
     // console.log('result: ', words.includes(guess))
 
     return words.includes(guess)
