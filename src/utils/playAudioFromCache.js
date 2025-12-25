@@ -1,19 +1,53 @@
-import { useTTS } from '../states/tts';
+import { getAudioContext } from './audioContextManager';
+import { getAudioFromCache } from './audioCacheDB';
+import { fetchAndCacheAudio } from './fetchAndCacheAudio'; // Twoja funkcja TTS
 
 export const playAudioFromCache = async (text, lang = 'pl-PL') => {
-  const { getAudioFromCache } = useTTS.getState();
-  const cacheKey = `${lang}::${text}`;
-  const arrayBuffer = getAudioFromCache(cacheKey);
+  try {
+    // 🔹 jeśli tekst jest pusty lub null, nic nie robimy
+    if (!text || text.trim() === '') return;
 
-  if (!arrayBuffer) {
-    console.warn('[TTS] Brak w cache:', cacheKey);
-    return;
+    const cacheKey = `${lang}::${text}`;
+
+    // 1️⃣ Spróbuj pobrać z IndexedDB
+    let arrayBuffer = await getAudioFromCache(cacheKey);
+
+    // 2️⃣ Jeśli nie ma w cache, pobierz z TTS i zapisz do IndexedDB
+    if (!arrayBuffer) {
+      await fetchAndCacheAudio(text, lang);
+      arrayBuffer = await getAudioFromCache(cacheKey);
+
+      if (!arrayBuffer || arrayBuffer.byteLength === 0) {
+        console.warn('[TTS] Brak audio nawet po fetch:', cacheKey);
+        return;
+      }
+    }
+
+    // 3️⃣ Odtwarzanie
+    const ctx = getAudioContext();
+
+    if (ctx.state === 'suspended') {
+      await ctx.resume();
+    }
+
+    // 🔹 callbackowa wersja decodeAudioData, bez rzucania wyjątków
+    ctx.decodeAudioData(
+      arrayBuffer.slice(0),
+      (decodedBuffer) => {
+        try {
+          const source = ctx.createBufferSource();
+          source.buffer = decodedBuffer;
+          source.connect(ctx.destination);
+          source.start(0);
+        } catch (err) {
+          console.error('[TTS] Błąd odtwarzania audio:', err);
+        }
+      },
+      (err) => {
+        console.error('[TTS] decodeAudioData error:', err);
+      }
+    );
+  } catch (err) {
+    console.error('[TTS] playAudioFromCache failed:', err);
   }
-
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const decoded = await audioContext.decodeAudioData(arrayBuffer.slice(0));
-  const source = audioContext.createBufferSource();
-  source.buffer = decoded;
-  source.connect(audioContext.destination);
-  source.start(0);
 };

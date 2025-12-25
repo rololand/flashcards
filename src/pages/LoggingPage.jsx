@@ -28,6 +28,7 @@ function LoggingPage(props) {
   const setMaxRepetitionDays = settings((state) => state.setMaxRepetitionDays)
   const setCheckArticle = settings((state) => state.setCheckArticle)
   const setNumberOfWordsToRepeat = settings((state) => state.setNumberOfWordsToRepeat)
+  const setSecondaryLanguage = settings((state) => state.setSecondaryLanguage)
 
   const setUserVariables = (data) => {    
     // console.log(data)
@@ -39,6 +40,7 @@ function LoggingPage(props) {
     setIsEditor(data['isEditor'])
     setLang_1(data['lang_1'])
     setLang_2(data['lang_2'])
+    setSecondaryLanguage(data['lang_2'])
     setLang_3(data['lang_3'])
     setLang_4(data['lang_4'])
     setLang_5(data['lang_5'])

@@ -1,4 +1,3 @@
-
 import './css/App.css';
 
 import { PrimeReactProvider } from 'primereact/api';
@@ -20,15 +19,27 @@ import LoggingPage from './pages/LoggingPage';
 import LoadingPage from './pages/LoadingPage';
 
 import TextToSpeechEngine from './components/TextToSpeechEngine';
+import AudioUnlocker from './components/AudioUnlocker.jsx';
 
 import { userState } from './states/user';
 import { settings } from './states/settings';
 import { currentPageState } from "./states/currentPage.js";
 
+import { useAutoRefreshAfterIdle } from "./utils/autoRefresh.js";
 
 function App() {
   const userName = userState((state) => state.userName)
   const isLogged = userState((state) => state.isLogged)
+
+  // 🔥 AUTO REFRESH iOS + Android
+  useAutoRefreshAfterIdle({
+    refreshAfter: 20 * 60 * 1000,
+    logout: true,
+    onLogout: () => {
+      userState.getState().logout?.();
+    },
+    onlyStandalone: false,
+  });
 
   const [isFormSent, setIsFormSent] = useState(false)
   const [loginErrMsg, setLoginErrMsg] = useState('');
@@ -46,36 +57,33 @@ function App() {
       const { token, region } = await res.json();
       setTokenRef(token);
       setRegionRef(region);
-      // console.log('[Azure TTS] Token refreshed');
-    } catch (err) {
-      // console.error('[Azure TTS] Błąd pobierania tokena:', err);
-    }
+    } catch (err) {}
   };
   
-  // Odśwież token cyklicznie co 9 minut
+  // Odśwież token co 9 minut
   useEffect(() => {
-    fetchToken(); // pobierz od razu na start
+    fetchToken();
 
     tokenRefreshInterval.current = setInterval(() => {
       fetchToken();
-    }, 9 * 60 * 1000); // 9 minut
+    }, 9 * 60 * 1000);
 
     return () => {
-      clearInterval(tokenRefreshInterval.current); // posprzątaj
+      clearInterval(tokenRefreshInterval.current);
     };
   }, []);
-
 
   const appLoader = () => {
     if (isLogged) {
       return (
         <PrimeReactProvider value={{ unstyled: false }}>
-        <AppMenu />
-            {currentPage == 'homePage' && <HomePage />}
-            {currentPage == 'library' && <WordsTable />}
-            {currentPage == 'admin' && <AdminPage />}
-            {currentPage == 'settings' && <SettingsPage />}
-        <TextToSpeechEngine />
+          <AppMenu />
+          {currentPage === 'homePage' && <HomePage />}
+          {currentPage === 'library' && <WordsTable />}
+          {currentPage === 'admin' && <AdminPage />}
+          {currentPage === 'settings' && <SettingsPage />}
+          <TextToSpeechEngine />
+          <AudioUnlocker />
         </PrimeReactProvider>
       )
     } else if (isFormSent) {
@@ -93,9 +101,7 @@ function App() {
     }
   }
 
-  return (
-    appLoader()
-  );
+  return appLoader();
 }
 
 export default App;

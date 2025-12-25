@@ -75,6 +75,7 @@ function HomePage() {
     axios.post(azure_url, req_body)
       .then(res => {
         let unshuffled = res.data
+        // console.log(unshuffled)
         setTotalWordsToDoCount(unshuffled.length)
         // let shuffled = unshuffled
         //   //map to get random sort value for every element in array
@@ -124,11 +125,15 @@ function HomePage() {
 
     axios.post(azure_url, req_body)
       .then(res => {
-        setWordsToDo(res.data)
-        //cachowanie slow
-        doCaching(res.data)
-        setIsExerciseFinished(false)
-        setCurrentExercisePage('flashCard')
+        if(res.data.length > 0) {
+          setWordsToDo(res.data)
+          //cachowanie slow
+          doCaching(res.data)
+          setIsExerciseFinished(false)
+          setCurrentExercisePage('flashCard')
+        } else {
+          setIsLoaded(true)
+        }
       })
       .catch(err => {
         console.log('Error: ' + err);

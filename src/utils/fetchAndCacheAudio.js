@@ -1,15 +1,14 @@
 import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
-import { useTTS } from '../states/tts';
 import { settings } from '../states/settings';
+import { cacheAudio, getAudioFromCache } from './audioCacheDB';
 
 export const fetchAndCacheAudio = async (text, lang = 'pl-PL') => {
   const { tokenRef, regionRef } = settings.getState();
-  const { cacheAudio, getAudioFromCache } = useTTS.getState();
-
   const cacheKey = `${lang}::${text}`;
-  if (getAudioFromCache(cacheKey)) {
-    return; // już w cache
-  }
+
+  // Sprawdzenie cache w IndexedDB
+  const cached = await getAudioFromCache(cacheKey);
+  if (cached) return; // już w cache
 
   const speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(tokenRef, regionRef);
 
@@ -31,14 +30,19 @@ export const fetchAndCacheAudio = async (text, lang = 'pl-PL') => {
   return new Promise((resolve, reject) => {
     synthesizer.speakTextAsync(
       text,
-      (result) => {
+      async (result) => {
+        synthesizer.close();
         if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
-          cacheAudio(cacheKey, result.audioData);
-          resolve();
+          try {
+            await cacheAudio(cacheKey, result.audioData);
+            resolve();
+          } catch (err) {
+            console.error('[TTS] Błąd zapisu do IndexedDB:', err);
+            resolve(); // mimo błędu zapisania i tak kontynuujemy
+          }
         } else {
           reject(new Error(result.errorDetails));
         }
-        synthesizer.close();
       },
       (err) => {
         synthesizer.close();
