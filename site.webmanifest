@@ -1,6 +1,6 @@
 {
-  "name": "Rololand - Fiszki",
-  "short_name": "RolFiszki",
+  "name": "FiszRolki by Rololand",
+  "short_name": "FiszRolki",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
