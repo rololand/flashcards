@@ -1,14 +1,17 @@
-import axios from 'axios'
-
 import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
 
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
 
+import LoadingPage from './LoadingPage';
+
 import { userState } from '../states/user';
 import { settings } from '../states/settings';
+
+import apiRetry from "../utils/apiRetry";
 
 function LoggingPage(props) {
   const setUserName = userState((state) => state.setUserName)
@@ -30,8 +33,9 @@ function LoggingPage(props) {
   const setNumberOfWordsToRepeat = settings((state) => state.setNumberOfWordsToRepeat)
   const setSecondaryLanguage = settings((state) => state.setSecondaryLanguage)
 
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
   const setUserVariables = (data) => {    
-    // console.log(data)
     setUserName(data['name']);
     setIsLogged(true);
     setIsMuted(data['isMuted'])
@@ -63,12 +67,14 @@ function LoggingPage(props) {
       "es-ES": data['maxRepetitionDays_es']
     }
     setMaxRepetitionDays(maxRepetitionDays)
+
     const checkArticle = {
       "de-DE": data['checkArticle_de'],
       "it-IT": data['checkArticle_it'],
       "es-ES": data['checkArticle_es']
     }
     setCheckArticle(checkArticle)
+
     const numberOfWordsToRepeat = {
       "pl-PL": data['numberOfWordsToRepeat_pl'],
       "de-DE": data['numberOfWordsToRepeat_de'],
@@ -79,34 +85,35 @@ function LoggingPage(props) {
     setNumberOfWordsToRepeat(numberOfWordsToRepeat)
   }
 
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await apiRetry.get('/api/auth/me', { withCredentials: true });
+        setUserVariables(res.data);
+        props.setLoginErrMsg('');
+      } catch (err) {
+
+      } finally {
+        setCheckingAuth(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
   const handleLogin = async (data) => {
     props.setIsFormSent(true)
 
-    const azure_url = 'https://flashcardsfunction.azurewebsites.net/api/users';
     const reqBody = {
       name: data.name,
       password: data.password
     };
   
     try {
-      // console.log('First attempt');
-      const res = await axios.post(azure_url, reqBody);
+      const res = await apiRetry.post('/api/auth/login', reqBody, { withCredentials: true });
       setUserVariables(res.data)
       props.setLoginErrMsg('');
       return
     } catch (err) {
-      // console.log('First attempt failed, waiting 20 seconds...', err);
-    }
-
-    await new Promise(resolve => setTimeout(resolve, 20000));
-  
-    try {
-      // console.log('Second attempt');
-      const res = await axios.post(azure_url, reqBody);
-      setUserVariables(res.data)
-      props.setLoginErrMsg('');
-    } catch (err2) {
-      // console.log('Second attempt failed:', err2);
       props.setIsFormSent(false);
       props.setLoginErrMsg('Something went wrong, try again.');
     }
@@ -119,15 +126,8 @@ function LoggingPage(props) {
     },
     validate: (data) => {
         let errors = {};
-
-        if (!data.name) {
-            errors.name = 'Name is required.';
-        }
-
-        if (!data.password) {
-            errors.password = 'Password is required.';
-        }
-
+        if (!data.name) errors.name = 'Name is required.';
+        if (!data.password) errors.password = 'Password is required.';
         return errors;
     },
     onSubmit: handleLogin
@@ -137,6 +137,10 @@ function LoggingPage(props) {
   const getFormErrorMessage = (name) => {
       return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
   };
+
+  if (checkingAuth) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className="flex align-content-center justify-content-center flex-wrap text-center" style={{minHeight: 300}} >
@@ -163,6 +167,5 @@ function LoggingPage(props) {
     </div>
   );
 }
-  
+
 export default LoggingPage;
-  

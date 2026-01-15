@@ -68,7 +68,7 @@ export const increaseRank = (rank) => {
 export const decreaseRank = (rank) => {
     if (rank <= 0)
         return 0
-    return rank - 1
+    return rank - 2
 }
 
 export const getColouredTitleCard = (title) => {
