@@ -1,57 +1,74 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const STORAGE_KEY = "app_last_inactive_time";
+const STORAGE_KEY = "app_last_activity_ts";
 
 export function useAutoRefreshAfterIdle({
-  refreshAfter = 20 * 60 * 1000,
-  logout = false,
-  onLogout,
-  onlyStandalone = false,
+  refreshAfter = 60 * 60 * 1000, // 1 minuta = 60 000
 } = {}) {
+
+  const refreshedRef = useRef(false);
+
   useEffect(() => {
-    const isStandalone =
-      window.navigator.standalone === true ||
-      window.matchMedia("(display-mode: standalone)").matches;
 
-    if (onlyStandalone && !isStandalone) return;
+    const now = () => Date.now();
 
-    const checkAndRefresh = (source) => {
-      const lastInactive = localStorage.getItem(STORAGE_KEY);
-      if (!lastInactive) return;
+    const saveActivity = () => {
+      localStorage.setItem(STORAGE_KEY, now().toString());
+    };
 
-      const diff = Date.now() - Number(lastInactive);
+    const shouldRefresh = () => {
+      const last = Number(localStorage.getItem(STORAGE_KEY));
+      if (!last) return false;
+      return now() - last >= refreshAfter;
+    };
 
-      if (diff >= refreshAfter) {
-        if (logout) {
-          localStorage.removeItem("auth_token");
-          localStorage.removeItem("refresh_token");
-          onLogout?.();
-        }
+    const refreshOnce = (source) => {
+      if (refreshedRef.current) return;
 
-        // HARD reload – jak pull-to-refresh
+      if (shouldRefresh()) {
+        refreshedRef.current = true;
         window.location.reload();
       }
     };
 
-    // ✅ 1. Sprawdzenie przy starcie (iOS często zabija proces)
-    checkAndRefresh("startup");
+    // 🔹 1. Cold start (iOS kill, reload PWA, hard refresh)
+    refreshOnce("startup");
 
-    // ✅ 2. iOS / Android – app idzie w tło
-    const handlePageHide = () => {
-      localStorage.setItem(STORAGE_KEY, Date.now().toString());
+    // 🔹 2. Visibility (tab change, background, app switch)
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        saveActivity();
+      } else {
+        refreshOnce("visibility");
+      }
     };
 
-    // ✅ 3. iOS / Android – powrót do appki
-    const handlePageShow = () => {
-      checkAndRefresh("pageshow");
-    };
+    // 🔹 3. Focus / blur (desktop, alt+tab)
+    const onBlur = () => saveActivity();
+    const onFocus = () => refreshOnce("focus");
 
-    window.addEventListener("pagehide", handlePageHide);
-    window.addEventListener("pageshow", handlePageShow);
+    // 🔹 4. Real user activity (idle detection)
+    const onUserActivity = () => refreshOnce("user-activity");
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("blur", onBlur);
+    window.addEventListener("focus", onFocus);
+
+    // mouse / keyboard / touch
+    window.addEventListener("mousemove", onUserActivity);
+    window.addEventListener("keydown", onUserActivity);
+    window.addEventListener("touchstart", onUserActivity);
+
+    // initial activity mark
+    saveActivity();
 
     return () => {
-      window.removeEventListener("pagehide", handlePageHide);
-      window.removeEventListener("pageshow", handlePageShow);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("blur", onBlur);
+      window.removeEventListener("focus", onFocus);
+      window.removeEventListener("mousemove", onUserActivity);
+      window.removeEventListener("keydown", onUserActivity);
+      window.removeEventListener("touchstart", onUserActivity);
     };
-  }, [refreshAfter, logout, onLogout, onlyStandalone]);
+  }, [refreshAfter]);
 }

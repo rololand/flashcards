@@ -36,70 +36,93 @@ function LoggingPage(props) {
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   const setUserVariables = (data) => {    
-    setUserName(data['name']);
+    const user = data.user;
+    setUserName(user['name']);
     setIsLogged(true);
-    setIsMuted(data['isMuted'])
-    setIsAdmin(data['isAdmin'])
-    setIsActive(data['isActive'])
-    setIsEditor(data['isEditor'])
-    setLang_1(data['lang_1'])
-    setLang_2(data['lang_2'])
-    setSecondaryLanguage(data['lang_2'])
-    setLang_3(data['lang_3'])
-    setLang_4(data['lang_4'])
-    setLang_5(data['lang_5'])
-    setUiLang(data['lang_ui'])
+    setIsMuted(user['isMuted'])
+    setIsAdmin(user['isAdmin'])
+    setIsActive(user['isActive'])
+    setIsEditor(user['isEditor'])
+    setLang_1(user['lang_1'])
+    setLang_2(user['lang_2'])
+    setSecondaryLanguage(user['lang_2'])
+    setLang_3(user['lang_3'])
+    setLang_4(user['lang_4'])
+    setLang_5(user['lang_5'])
+    setUiLang(user['lang_ui'])
 
     const numberOfNewWords = {
-      "pl-PL": data['numberOfNewWords_pl'],
-      "de-DE": data['numberOfNewWords_de'],
-      "en-GB": data['numberOfNewWords_en'],
-      "it-IT": data['numberOfNewWords_it'],
-      "es-ES": data['numberOfNewWords_es']
+      "pl-PL": user['numberOfNewWords_pl'],
+      "de-DE": user['numberOfNewWords_de'],
+      "en-GB": user['numberOfNewWords_en'],
+      "it-IT": user['numberOfNewWords_it'],
+      "es-ES": user['numberOfNewWords_es']
     }
     setNumberOfNewWords(numberOfNewWords)
 
     const maxRepetitionDays = {
-      "pl-PL": data['maxRepetitionDays_pl'],
-      "de-DE": data['maxRepetitionDays_de'],
-      "en-GB": data['maxRepetitionDays_en'],
-      "it-IT": data['maxRepetitionDays_it'],
-      "es-ES": data['maxRepetitionDays_es']
+      "pl-PL": user['maxRepetitionDays_pl'],
+      "de-DE": user['maxRepetitionDays_de'],
+      "en-GB": user['maxRepetitionDays_en'],
+      "it-IT": user['maxRepetitionDays_it'],
+      "es-ES": user['maxRepetitionDays_es']
     }
     setMaxRepetitionDays(maxRepetitionDays)
 
     const checkArticle = {
-      "de-DE": data['checkArticle_de'],
-      "it-IT": data['checkArticle_it'],
-      "es-ES": data['checkArticle_es']
+      "de-DE": user['checkArticle_de'],
+      "it-IT": user['checkArticle_it'],
+      "es-ES": user['checkArticle_es']
     }
     setCheckArticle(checkArticle)
 
     const numberOfWordsToRepeat = {
-      "pl-PL": data['numberOfWordsToRepeat_pl'],
-      "de-DE": data['numberOfWordsToRepeat_de'],
-      "en-GB": data['numberOfWordsToRepeat_en'],
-      "it-IT": data['numberOfWordsToRepeat_it'],
-      "es-ES": data['numberOfWordsToRepeat_es']
+      "pl-PL": user['numberOfWordsToRepeat_pl'],
+      "de-DE": user['numberOfWordsToRepeat_de'],
+      "en-GB": user['numberOfWordsToRepeat_en'],
+      "it-IT": user['numberOfWordsToRepeat_it'],
+      "es-ES": user['numberOfWordsToRepeat_es']
     }
     setNumberOfWordsToRepeat(numberOfWordsToRepeat)
   }
 
+  // ======================
+  // CHECK AUTH ON START
+  // ======================
   useEffect(() => {
     const checkAuth = async () => {
+      const storedRefreshToken = localStorage.getItem("refreshToken");
+      if (!storedRefreshToken) {
+        setCheckingAuth(false);
+        return;
+      }
+
       try {
-        const res = await apiRetry.get('/api/auth/me', { withCredentials: true });
+        const res = await apiRetry.post('/api/auth/refresh', {
+          refreshToken: storedRefreshToken
+        }, { withCredentials: true });
+
+        // Zapisz nowy refresh token, jeśli zwrócony (opcjonalnie)
+        if (res.data.refreshToken) {
+          localStorage.setItem("refreshToken", res.data.refreshToken);
+        }
+
         setUserVariables(res.data);
         props.setLoginErrMsg('');
-      } catch (err) {
 
+      } catch (err) {
+        console.error("Refresh failed", err);
       } finally {
         setCheckingAuth(false);
       }
     };
+
     checkAuth();
   }, []);
 
+  // ======================
+  // HANDLE LOGIN
+  // ======================
   const handleLogin = async (data) => {
     props.setIsFormSent(true)
 
@@ -110,7 +133,13 @@ function LoggingPage(props) {
   
     try {
       const res = await apiRetry.post('/api/auth/login', reqBody, { withCredentials: true });
-      setUserVariables(res.data)
+
+      // Zapisz refresh token w localStorage
+      if (res.data.refreshToken) {
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+      }
+
+      setUserVariables(res.data);
       props.setLoginErrMsg('');
       return
     } catch (err) {

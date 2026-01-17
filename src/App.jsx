@@ -31,14 +31,9 @@ function App() {
   const userName = userState((state) => state.userName)
   const isLogged = userState((state) => state.isLogged)
 
-  // 🔥 AUTO REFRESH iOS + Android
+  // AUTO REFRESH
   useAutoRefreshAfterIdle({
-    refreshAfter: 20 * 60 * 1000,
-    logout: true,
-    onLogout: () => {
-      userState.getState().logout?.();
-    },
-    onlyStandalone: false,
+    refreshAfter: 60 * 60 * 1000, // 1 minuta = 60 000
   });
 
   const [isFormSent, setIsFormSent] = useState(false)

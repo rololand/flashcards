@@ -60,15 +60,17 @@ export const getNewDate = (rank, maxRepetitionDays) => {
 }
 
 export const increaseRank = (rank) => {
+    rank = rank + 1
     if (rank >= 10)
         return 10
-    return rank + 1
+    return rank
 }
 
 export const decreaseRank = (rank) => {
+    rank = rank - 2
     if (rank <= 0)
         return 0
-    return rank - 2
+    return rank
 }
 
 export const getColouredTitleCard = (title) => {
