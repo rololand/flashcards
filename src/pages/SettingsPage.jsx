@@ -10,7 +10,7 @@ import { userState } from '../states/user';
 import { settings } from "../states/settings.js";
 
 import uitxt from '../uitxt.json';
-import apiRetry from "../utils/apiRetry"; // <- retry
+import apiRetry from "../utils/apiRetry";
 
 function SettingsPage(props) {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -90,6 +90,11 @@ function SettingsPage(props) {
     } else if (type === "numberOfWordsToRepeat") {
       setNumberOfWordsToRepeat({ ...numberOfWordsToRepeat, [lang]: value });
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("refreshToken");
+    window.location.reload();
   };
 
   const handleSaveSetting = async (data) => {
@@ -220,9 +225,18 @@ function SettingsPage(props) {
           </TabView>
 
           <div className="mt-4 text-center">
-            <Button label="Save" icon="pi pi-save" type="submit" disabled={isButtonDisabled} className="p-button-lg p-button-raised p-button-primary" />
+            <Button label={uitxt["50"][uiLang]} icon="pi pi-save" type="submit" disabled={isButtonDisabled} className="p-button-lg p-button-raised p-button-primary" />
           </div>
         </form>
+        <div className="mt-3 text-center">
+          <Button
+            label={uitxt["51"][uiLang]}
+            icon="pi pi-sign-out"
+            type="button"
+            onClick={handleLogout}
+            className="p-button-lg p-button-raised p-button-danger"
+          />
+        </div>
       </div>
       <Toast ref={myToast} />
     </div>

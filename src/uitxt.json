@@ -343,6 +343,41 @@
         "es-ES": "Check articles"
     },
     "50": {
+        "pl-PL": "zapisz",
+        "en-GB": "save",
+        "de-DE": "save",
+        "it-IT": "save",
+        "es-ES": "save"
+    },
+    "51": {
+        "pl-PL": "wyloguj",
+        "en-GB": "logout",
+        "de-DE": "logout",
+        "it-IT": "logout",
+        "es-ES": "logout"
+    },
+    "52": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "53": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "54": {
+        "pl-PL": "",
+        "en-GB": "",
+        "de-DE": "",
+        "it-IT": "",
+        "es-ES": ""
+    },
+    "55": {
         "pl-PL": "",
         "en-GB": "",
         "de-DE": "",

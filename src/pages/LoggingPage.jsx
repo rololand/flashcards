@@ -102,7 +102,6 @@ function LoggingPage(props) {
           refreshToken: storedRefreshToken
         }, { withCredentials: true });
 
-        // Zapisz nowy refresh token, jeśli zwrócony (opcjonalnie)
         if (res.data.refreshToken) {
           localStorage.setItem("refreshToken", res.data.refreshToken);
         }
@@ -134,7 +133,6 @@ function LoggingPage(props) {
     try {
       const res = await apiRetry.post('/api/auth/login', reqBody, { withCredentials: true });
 
-      // Zapisz refresh token w localStorage
       if (res.data.refreshToken) {
         localStorage.setItem("refreshToken", res.data.refreshToken);
       }
