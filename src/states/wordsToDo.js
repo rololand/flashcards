@@ -10,6 +10,9 @@ import apiRetry from "../utils/apiRetry"; // <- używamy retry
 export const wordsToDoState = create((set, get) => ({
   wordsToDo: [emptyWord],
   totalWordsToDoCount: 0,
+  wordsInExerciseCount: 0,
+  correctAnswersCount: 0,
+  guessesCount: 0,
 
   setWordsToDo: (newWordsToDo) =>
     set(() => {
@@ -17,23 +20,48 @@ export const wordsToDoState = create((set, get) => ({
       return {
         wordsToDo: newWordsToDo,
       }
-    }),
+  }),
   setTotalWordsToDoCount: (count) =>
     set(() => {
       // console.log('New wordsToDo')
       return {
         totalWordsToDoCount: count,
       }
-    }),
+  }),
+  clearExerciseCounts: (newWordsToDo) =>
+    set(() => {
+      // console.log('New wordsToDo')
+      return {
+        wordsInExerciseCount: newWordsToDo.length,
+        correctAnswersCount: 0,
+        guessesCount: 0,
+      }
+  }),
+  increaseCorrectAnswersCount: () =>
+    set((state) => {
+      // console.log('New increaseCorrectAnswersCount ', state.correctAnswersCount + 1)
+      return {
+        correctAnswersCount: state.correctAnswersCount + 1,
+      }
+  }),
+  increaseGuessesCount: () =>
+    set((state) => {
+      // console.log('New increaseGuessesCount ', state.guessesCount + 1)
+      return {
+        guessesCount: state.guessesCount + 1,
+      }
+  }),
   
 
   handleNokClick: () => {
+    const increaseGuessesCount = get().increaseGuessesCount;
+    increaseGuessesCount()
+
     const { wordsToDo } = get();
     const setWordsToDo = get().setWordsToDo;
     const lang = settings.getState().secondaryLanguage;
     const clearTTS = useTTS.getState().clearQueue;
     clearTTS()
-
     let newCurrentCard = {...wordsToDo[0]}
     let newWordsToDo = [...wordsToDo]
     let rank = 0
@@ -59,7 +87,14 @@ export const wordsToDoState = create((set, get) => ({
   },
 
   handleOkClick: async () => {
-    const { wordsToDo } = get();
+    const increaseGuessesCount = get().increaseGuessesCount;
+    increaseGuessesCount()
+
+    const increaseCorrectAnswersCount = get().increaseCorrectAnswersCount;
+    increaseCorrectAnswersCount()
+
+    const { wordsToDo, wordsInExerciseCount, guessesCount } = get();
+
     const setWordsToDo = get().setWordsToDo;
     const userName = userState.getState().userName;
     const lang = settings.getState().secondaryLanguage;
@@ -81,18 +116,19 @@ export const wordsToDoState = create((set, get) => ({
     else if (lang === 'it-IT') rank = newCurrentCard.rank_it
 
     // update proper rank and date
+    let isFirstRound = guessesCount <= wordsInExerciseCount
     if (lang === 'de-DE') {
       newCurrentCard.date_de = getNewDate(rank, maxRepetitionDays[lang])
-      newCurrentCard.rank_de = increaseRank(rank)
+      newCurrentCard.rank_de = increaseRank(rank, isFirstRound)
     } else if (lang === 'en-GB') {
       newCurrentCard.date_en = getNewDate(rank, maxRepetitionDays[lang])
-      newCurrentCard.rank_en = increaseRank(rank)
+      newCurrentCard.rank_en = increaseRank(rank, isFirstRound)
     } else if (lang === 'es-ES') {
       newCurrentCard.date_es = getNewDate(rank, maxRepetitionDays[lang])
-      newCurrentCard.rank_es = increaseRank(rank)
+      newCurrentCard.rank_es = increaseRank(rank, isFirstRound)
     } else if (lang === 'it-IT') {
       newCurrentCard.date_it = getNewDate(rank, maxRepetitionDays[lang])
-      newCurrentCard.rank_it = increaseRank(rank)
+      newCurrentCard.rank_it = increaseRank(rank, isFirstRound)
     }
 
     // prepare SQL update

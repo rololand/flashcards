@@ -23,6 +23,7 @@ import apiRetry from "../utils/apiRetry";
 
 function HomePage() {
   const setWordsToDo = wordsToDoState((state) => state.setWordsToDo);
+  const clearExerciseCounts = wordsToDoState((state) => state.clearExerciseCounts);
   const setTotalWordsToDoCount = wordsToDoState((state) => state.setTotalWordsToDoCount);
 
   const currentPage = currentPageState((state) => state.currentPage);
@@ -75,6 +76,7 @@ function HomePage() {
       const count = numberOfWordsToRepeat[lang];
       const shuffled = unshuffled.sort(() => Math.random() - 0.5).slice(0, count);
       setWordsToDo(shuffled);
+      clearExerciseCounts(shuffled);
 
       // caching
       doCaching(shuffled);
@@ -111,6 +113,7 @@ function HomePage() {
       const res = await apiRetry.post(azure_url, req_body);
       if (res.data.length > 0) {
         setWordsToDo(res.data);
+        clearExerciseCounts(res.data);
         // caching
         doCaching(res.data);
         setIsExerciseFinished(false);

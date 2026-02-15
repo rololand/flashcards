@@ -59,15 +59,19 @@ export const getNewDate = (rank, maxRepetitionDays) => {
     return newDay.format('YYYY-MM-DD').toString()
 }
 
-export const increaseRank = (rank) => {
-    rank = rank + 1
+export const increaseRank = (rank, isFirstRound = false) => {
+    // console.log('isFirstRound', isFirstRound)
+    if(isFirstRound) {
+        rank = rank + 1
+    }
+    
     if (rank >= 10)
         return 10
     return rank
 }
 
 export const decreaseRank = (rank) => {
-    rank = rank - 2
+    rank = rank - 1
     if (rank <= 0)
         return 0
     return rank
@@ -109,9 +113,9 @@ export const compareWords = (guess, word, hint) => {
     }
         
     words.push(word)
-    console.log('guess: ', guess)
+    // console.log('guess: ', guess)
     // console.log('word: ', word)
-    console.log('words: ', words)
+    // console.log('words: ', words)
     // console.log('result: ', words.includes(guess))
 
     return words.includes(guess)
